@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{admin/layout/layout :: admin(~{::title},~{::body})}">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Quản lí | Mã giảm giá</title>
+</head>
+
+<body>
+	<main class="app-content">
+		<div class="app-title">
+			<ul class="app-breadcrumb breadcrumb side">
+				<li class="breadcrumb-item active"><a><b>
+							Danh sách mã giảm giá </b></a></li>
+			</ul>
+			<div id="clock"></div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="tile">
+					<div class="tile-body">
+						<div class="row element-button">
+							<div class="col-sm-2">
+								<a class="btn btn-add btn-sm" data-toggle="modal" data-target="#modalkm" title="Thêm"><i
+										class="fa fa-plus"></i> Tạo mã giảm giá</a>
+							</div>
+
+							
+						</div>
+						<div id="sampleTable_wrapper"
+							class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+
+							<div class="row">
+								<div class="col-sm-12">
+									<table class="table table-hover table-bordered" id="sampleTable">
+										<thead>
+											<tr>
+
+												<th width="500px"><span>Tên khuyến mãi</span></th>
+												<th width="80px"><span>Số lượng</span></th>
+												<th width="100px"><span>Tiền giảm</span></th>
+												<th width="100px"><span>Mức giá tối thiểu</span></th>
+												<th width="100px"><span>Mức giá lớn nhất</span></th>
+												<th width="100px"><span>Tên loại </span></th>
+												<th width="80px"><span>Chức năng </span></th>
+											</tr>
+										</thead>
+										<tbody>
+
+											<tr th:each="km :${khuyenmai}">
+
+												<td th:text="${km.magiam}"></td>
+												<td th:text="${km.soluong}"></td>
+												<td><span
+														th:text="${#numbers.formatDecimal(km.tiengiam, 1, 'POINT', 0, 'DEFAULT')+'đ'}"></span>
+												</td>
+												<td><span
+														th:text="${#numbers.formatDecimal(km.giamin, 1, 'POINT', 0, 'DEFAULT')+'đ'}"></span>
+												</td>
+												
+												<td><span
+														th:text="${#numbers.formatDecimal(km.giamax, 1, 'POINT', 0, 'DEFAULT')+'đ'}"></span>
+												</td>
+												<td>
+													<span th:if="${km.loai == 1}">Miễn phí ship</span>
+													<span th:if="${km.loai == 2}">Giảm giá hóa đơn</span>
+												</td>
+												<td><a class="btn btn-add btn-sm settt"
+														th:onclick="'javascript:editkm(' + ${km.idgiam} + ')'"> <i
+															class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+												</td>
+
+											</tr>
+
+
+
+										</tbody>
+									</table>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+	<!-- Modal -->
+	<div class="modal fade" id="modalkm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+		aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLongTitle">Tạo mới khuyến mãi</h5>
+
+				</div>
+				<div class="modal-body">
+
+					<form class="row" th:action="@{/admin/addkhm}" method="post" th:object="${km}"
+						onsubmit="return validateForm()">
+						<div class="form-group  col-md-12">
+							<label for="" class="control-label">Loại giảm giá
+							</label> <select class="form-control" name="loai" required>
+								<option>-- Chọn loại --</option>
+
+								<option value="1">Miễn ship</option>
+								<option value="2">Giảm giá đơn hàng</option>
+							</select>
+
+						</div>
+
+						<div class="form-group col-md-12">
+							<label class="control-label">Tên khuyến mãi</label> <input class="form-control" type="text"
+								name="tenkm" th:field="*{magiam}" required>
+						</div>
+
+						<div class="form-group col-6">
+							<label class="control-label">Tiền giảm</label> <input class="form-control" type="number"
+								th:field="*{tiengiam}" name="tien" min="0" required>
+
+						</div>
+						<input type="hidden" id="idgiam">
+						<div class="form-group  col-6">
+							<label class="control-label">Số lượng</label> <input class="form-control" type="number"
+								min="0" th:field="*{soluong}" required>
+
+						</div>
+						<div class="form-group col-6">
+							<label class="control-label">Mực giá tối thiểu</label> <input class="form-control" type="number"
+								th:field="*{giamin}" name="tien" min="0" required>
+
+						</div>
+						<input type="hidden" id="idgiam">
+						<div class="form-group  col-6">
+							<label class="control-label">Mức giá lớn nhất</label> <input class="form-control" type="number"
+								min="0" th:field="*{giamax}" required>
+
+						</div>
+
+
+						<div class="modal-footer">
+							<button type="submit" class="btn btn-primary">Thêm
+							</button>
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+
+						</div>
+					</form>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+
+	<div class="modal fade" id="modaleditkm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+		aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLongTitle">Cập nhật khuyến mãi</h5>
+
+				</div>
+				<div class="modal-body">
+
+					<form class="row" th:action="@{/admin/capnhatkm}" method="post" th:object="${km}"
+						onsubmit="return validateForm()">
+						<div class="form-group col-md-12">
+							<label for="" class="control-label">Loại giảm giá</label>
+							<select class="form-control" id="loai" name="loai" required>
+								<option value="">-- Chọn loại --</option>
+								<option value="1">Miễn ship</option>
+								<option value="2">Giảm giá đơn hàng</option>
+							</select>
+						</div>
+
+						<div class="form-group col-md-12">
+							<label class="control-label">Tên khuyến mãi</label>
+							<input class="form-control" type="text" id="tenkm" name="tenkm" th:field="*{magiam}"
+								required>
+						</div>
+
+						<div class="form-group col-6">
+							<label class="control-label">Tiền giảm</label>
+							<input class="form-control" type="number" id="tien" th:field="*{tiengiam}" name="tien"
+								min="0" required>
+						</div>
+						<input type="hidden" id="idgiam" name="idgiam">
+
+						<div class="form-group col-6">
+							<label class="control-label">Số lượng</label>
+							<input class="form-control" type="number" min="0" id="soluong" th:field="*{soluong}"
+								required>
+						</div>
+						<div class="form-group col-6">
+							<label class="control-label">Mực giá tối thiểu</label>
+							<input class="form-control" type="number" id="giamin" th:field="*{giamin}" name="tien"
+								min="0" required>
+						</div> 
+						<div class="form-group col-6">
+							<label class="control-label">Mức giá lớn nhất</label>
+							<input class="form-control" type="number" min="0" id="giamax" th:field="*{giamax}"
+								required>
+						</div>
+
+						<div class="modal-footer">
+							<button type="submit" class="btn btn-primary">Cập nhật</button>
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+						</div>
+					</form>
+				</div>
+
+			</div>
+		</div>
+	</div>
+
+
+</body>
+
+</html>

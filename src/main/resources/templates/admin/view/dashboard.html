@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{admin/layout/layout :: admin(~{::title},~{::body})}">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Bảng điều khiển</title>
+</head>
+
+<body>
+	<main class="app-content">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="app-title">
+					<ul class="app-breadcrumb breadcrumb">
+						<li class="breadcrumb-item"><a href="#"><b>Bảng điều
+									khiển</b></a></li>
+					</ul>
+					<div id="clock"></div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<!--Left-->
+			<div class="col-md-12 col-lg-12">
+				<div class="row">
+					<!-- col-6 -->
+					<div class="col-md-6">
+						<div class="widget-small primary coloured-icon">
+							<i class='icon bx bxs-user-account fa-3x'></i>
+							<div class="info">
+								<h4>Tổng khách hàng</h4>
+								<p>
+									<b>[(${slkh})] khách hàng</b>
+								</p>
+								<p class="info-tong">Tổng số khách hàng được quản lý.</p>
+							</div>
+						</div>
+					</div>
+					<!-- col-6 -->
+					<div class="col-md-6">
+						<div class="widget-small info coloured-icon">
+							<i class='icon bx bxs-data fa-3x'></i>
+							<div class="info">
+								<h4>Tổng sản phẩm</h4>
+								<p>
+									<b>[(${slsp})] sản phẩm</b>
+								</p>
+								<p class="info-tong">Tổng số sản phẩm được quản lý.</p>
+							</div>
+						</div>
+					</div>
+					<!-- col-6 -->
+					<div class="col-md-6">
+						<div class="widget-small warning coloured-icon">
+							<i class='icon bx bxs-shopping-bags fa-3x'></i>
+							<div class="info">
+								<h4>Tổng đơn hàng</h4>
+								<p>
+									<b>[(${slhd})] đơn hàng</b>
+								</p>
+								<p class="info-tong">Tổng số hóa đơn bán hàng trong tháng.</p>
+							</div>
+						</div>
+					</div>
+					<!-- col-6 -->
+					<div class="col-md-6">
+						<div class="widget-small danger coloured-icon">
+							<i class='icon bx bxs-error-alt fa-3x'></i>
+							<div class="info">
+								<h4>Hết hàng</h4>
+								<p>
+									<b>[(${slspht})] sản phẩm</b>
+								</p>
+								<p class="info-tong">Số sản phẩm cảnh báo hết cần nhập thêm.</p>
+							</div>
+						</div>
+					</div>
+				
+					<div class="col-md-12">
+						<div class="tile">
+							<h3 class="tile-title">Đơn hàng chờ xác nhận</h3>
+							<div>
+								<table class="table table-bordered">
+									<thead>
+										<tr>
+											<th> <span>ID đơn hàng</span></th>
+											<th> <span>Tên khách hàng</span></th>
+											<th> <span>Tổng tiền</span></th>
+											<th> <span>Trạng thái</span></th>
+										</tr>
+									</thead>
+									<tbody>
+
+										<!-- Kiểm tra nếu danh sách listhdtt không có dữ liệu -->
+										<th:block th:if="${#lists.isEmpty(listhdtt)}">
+											<!-- Hiển thị thông báo hoặc giá trị rỗng -->
+											<tr>
+												<td colspan="4" class="text-center">Không có dữ liệu</td>
+											</tr>
+										</th:block>
+										<!-- Nếu danh sách có dữ liệu -->
+										<th:block th:if="${not #lists.isEmpty(listhdtt)}">
+											<tr th:each="hd : ${listhdtt}">
+												<td th:text="${hd.mahd}"></td>
+												<td th:text="${hd.tennguoinhan}"></td>
+
+												<td
+													th:text="${#numbers.formatDecimal(hd.tongtien, 1, 'POINT', 0, 'DEFAULT')+'đ'}">
+												</td>
+												<td><span class="badge bg-info">Chờ xử lí</span></td>
+											</tr>
+										</th:block>
+
+
+
+
+
+									</tbody>
+								</table>
+							</div>
+							<!-- / div trống-->
+						</div>
+					</div>
+					
+				</div>
+			</div>
+			<!--END left-->
+			<!--Right-->
+			<div class="col-md-12 col-lg-12">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="tile">
+							<h3 class="tile-title">Khách hàng mới</h3>
+							<div>
+								<table class="table table-hover">
+									<thead>
+										<tr>
+											<th>Tên khách hàng</th>
+											<th>Email</th>
+											<th>Số điện thoại</th>
+											<th>Địa chỉ</th>
+										</tr>
+									</thead>
+									<tbody>
+										<th:block th:if="${#lists.isEmpty(khm)}">
+											<!-- Hiển thị thông báo "Không có dữ liệu" -->
+											<tr>
+												<td colspan="4" class="text-center">Không có dữ liệu</td>
+											</tr>
+										</th:block>
+										<!-- Nếu danh sách có dữ liệu -->
+										<th:block th:if="${not #lists.isEmpty(khm)}">
+											<tr th:each="kh: ${khm}">
+												<td th:text="${kh.hotenkh}"></td>
+												<td th:text="${kh.email}"></td>
+												<td th:text="${kh.dienthoai}"></td>
+												<td th:text="${kh.diachi}"></td>
+											</tr>
+										</th:block>
+								</table>
+							</div>
+
+						</div>
+					</div>
+					<div class="col-md-12">
+						<figure class="highcharts-figure">
+							<div id="thongkedoanhthu" class=""></div>
+							<button class="btn btn-excel" id="plain">Dọc</button>
+							<button class="btn btn-danger" id="inverted">Ngang</button>
+						</figure>
+					</div>
+					<table hidden="true" id="bang1">
+						<tr th:each="hd : ${revenueData}">
+							<td th:text="${hd[0]}"></td>
+							<td th:text="${hd[1]}"></td>
+						</tr> 
+					</table>
+				
+
+				</div>
+				
+			</div>
+			
+			<div class="col-md-12 col-lg-12">
+				<div class="row">
+					<div class="col-md-12">
+						<figure class="highcharts-figure1">
+							<div id="container2"></div>
+							<p class="highcharts-description"></p>
+						</figure>
+					</div>
+					<table hidden="true" id="bang2">
+						<tr th:each="us : ${souser}">
+							<td th:text="${us[0]}"></td>
+							<td th:text="${us[1]}"></td>
+						</tr>
+					</table>
+					<table hidden="true" id="bang3">
+						<tr th:each="os : ${soOrder}">
+							<td th:text="${os[0]}"></td>
+							<td th:text="${os[1]}"></td>
+						</tr>
+					</table>
+				</div>
+				
+			</div>
+
+
+
+			<!--END right-->
+			
+		</div>
+	</main>
+</body>
+
+</html>

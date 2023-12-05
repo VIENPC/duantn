@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{admin/layout/layout :: admin(~{::title},~{::body})}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Xem chi tiết đơn hàng</title>
+</head>
+
+<body>
+    <main class="app-content">
+        <div class="app-title">
+            <ul class="app-breadcrumb breadcrumb side">
+                <li class="breadcrumb-item active"><a th:href="@{/admin/qldonhang}"><b>Danh sách đơn hàng</b></a></li>
+                <li class="breadcrumb-item"><a>Chi tiết đơn hàng
+                    </a></li>
+            </ul>
+            <div id="clock"></div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="tile">
+                    <div class="tile-body">
+                        <div class="row element-button">
+                            <div class="col-sm-2">
+                                <a class="btn btn-delete btn-sm print-file" type="button" title="In"
+                                    onclick="myApp.printTable()"><i class="fa fa-print"></i> In dữ liệu</a>
+                            </div>
+                            
+
+                            <div class="col-sm-2">
+                                <a class="btn btn-excel btn-sm export" title="Xuất file excel"><i
+                                        class="fa fa-file-excel-o"></i>
+                                    Xuất Excel</a>
+                            </div>
+                            <div class="col-sm-2">
+                                <a class="btn btn-delete btn-sm pdf-file" type="button" title="In"
+                                    onclick="myFunction(this)"><i class="fa fa-file-pdf-o"></i> Xuất PDF</a>
+                            </div>
+                            
+                        </div>
+
+                        <table class="table table-hover table-bordered" id="sampleTable">
+                            <thead>
+                                <tr>
+
+                                    <th width="10"><input type="checkbox" id="all"></th>
+                                    <th><span>Mã hóa đơn</span></th>
+                                    <th><span>Tên sản phẩm</span></th>
+                                    <th><span>Số lượng </span></th>
+                                    <th><span>Giá sản phẩm </span></th>
+                                    <th><span>Tổng tiền</span></th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="hdct : ${listhdct}">
+                                    <td width="10"><input type="checkbox" name="check1" value="1"></td>
+                                    <td th:text="${hdct.hoadon.mahd}"></td>
+                                    <td th:text="${hdct.sanpham.tensp}"></td>
+                                    <td th:text="${hdct.soluong}"></td>
+                                    <td
+                                        th:text="${#numbers.formatDecimal(hdct.sanpham.giasp, 1, 'POINT', 0, 'DEFAULT')+'đ'}">
+                                    <td
+                                        th:text="${#numbers.formatDecimal(hdct.soluong * hdct.sanpham.giasp, 1, 'POINT', 0, 'DEFAULT')+'đ'}">
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr th:object="${hoadon}">
+                                    <th colspan="2">Ghi chú:</th>
+                                    <td colspan="3" th:if="*{#strings.isEmpty(ghichu)}" style="text-align: center;">Trống</td>
+                                    <td colspan="3" th:unless="*{#strings.isEmpty(ghichu)}" th:text="*{ghichu}"></td>
+                                    
+                                    <td style="font-weight: bold;"  th:text="*{#numbers.formatDecimal(tongtien, 1, 'POINT', 0, 'DEFAULT')+'đ'}"></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                        <table class="table table-hover table-bordered" id="table">
+                            <thead>
+                                <tr>
+                                    <th colspan="5"
+                                        style="text-align: center; font-size: 25px; font-weight: bold ;">
+                                        DANH SÁCH ĐƠN HÀNG CHI TIẾT</th>
+                                </tr>
+                                <tr>
+                                    <th><span>Mã hóa đơn</span></th>
+                                    <th><span>Tên sản phẩm</span></th>
+                                    <th><span>Số lượng </span></th>
+                                    <th><span>Giá sản phẩm </span></th>
+                                    <th><span>Tổng tiền</span></th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="hdct : ${listhdct}">
+                    
+                                    <td th:text="${hdct.hoadon.mahd}"></td>
+                                    <td th:text="${hdct.sanpham.tensp}"></td>
+                                    <td th:text="${hdct.soluong}"></td>
+                                    <td
+                                        th:text="${#numbers.formatDecimal(hdct.sanpham.giasp, 1, 'POINT', 0, 'DEFAULT')+'đ'}">
+                                    <td
+                                        th:text="${#numbers.formatDecimal(hdct.soluong * hdct.sanpham.giasp, 1, 'POINT', 0, 'DEFAULT')+'đ'}">
+                                </tr>
+                            </tbody>
+                            <tfoot>
+                                <tr th:object="${hoadon}">
+                                    <th colspan="1">Ghi chú:</th>
+                                    <td colspan="3" th:if="*{#strings.isEmpty(ghichu)}" style="text-align: center;">Trống</td>
+                                    <td colspan="3" th:unless="*{#strings.isEmpty(ghichu)}" th:text="*{ghichu}"></td>
+                                    
+                                    <td style="font-weight: bold;"  th:text="*{#numbers.formatDecimal(tongtien, 1, 'POINT', 0, 'DEFAULT')+'đ'}"></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+</body>
+
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{banhang/layout/layout :: banhang(~{::title},~{::main})}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NVA3 | Nhập mã xác nhận</title>
+</head>
+
+<body>
+    <main>
+        
+
+        <!-- Start Banner Area -->
+        <section class="banner-area organic-breadcrumb">
+            <div class="container">
+                <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+                    <div class="col-first">
+                        <h1>Xác nhận</h1>
+                        <nav class="d-flex align-items-center">
+                            <a th:href="@{/index}">Trang chủ<span class="lnr lnr-arrow-right"></span></a>
+                            <a href="">Xác nhận</a>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- End Banner Area -->
+
+        <main class="main-content">
+		
+
+		<section class="account-area">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-8 col-md-8 m-auto pt-4 pb-4">
+						<div class="account-form-wrap">
+							<div class="login-form2">
+								<div class="content">
+									<h4 class="title">Mã xác nhận</h4>
+									<p>Vui lòng nhập mã xác nhận vào đây để tiến hành xác thực đăng ký tài khoản</p>
+								</div>
+								<form th:action="@{/confirm}" method="post">
+									<div class="row">
+										<h4>[[${error}]]</h4>
+										<div class="col-12">
+											<label class="form-label">Mã xác nhận</label>
+											<div class="form-group">
+												<input class="form-control" name="confirm" placeholder="Nhập mã xác nhận 6 chữ số" required>
+											</div>
+										</div>
+										<div class="col-12">
+											<div class="login-form-group mt-0">
+												<button class="btn-sign d-block w-100" type="submit">Gửi</button>
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+	</main>
+
+    </main>
+</body>
+
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{admin/layout/layout :: admin(~{::title},~{::body})}">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Sản phẩm bán chạy</title>
+	
+</head>
+
+<body>
+	<main class="app-content">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="app-title">
+					<ul class="app-breadcrumb breadcrumb">
+						<li class="breadcrumb-item"><a href="#"><b>Sản phẩm bán chạy</b></a></li>
+					</ul>
+					<div id="clock"></div>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+
+			<div class="col-md-12">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="tile">
+							<div>
+								<h3 class="tile-title">SẢN PHẨM BÁN CHẠY </h3>
+							</div>
+							<div class="row">
+								<div class="col-sm-6">
+									
+									<form th:action="@{/admin/spbanchay/category}" method="get" id="formloai">
+										<select class="form-control" name="categoryid" id="categoryid"
+											onchange="submitFormLoai()">
+											<option value="" >- Chọn theo loại sản phẩm --</option>
+											<option  th:each="dm : ${listdanhmuc}" th:text="${dm.tennhom}"
+												th:value="${dm.manhom}">
+											</option>
+
+										</select>
+									</form>
+								</div>
+								<div class="col-sm-6 mb-3">
+									<form th:action="@{/admin/spbanchay/brand}" method="get" id="formhang">
+										<select class="form-control" name="thid" id="thid"
+											onchange="submitForm()">
+											<option   value="">- Chọn theo hãng sản phẩm --</option>
+											<option  th:each="th : ${listhh}" th:text="${th.tenthuonghieu}"
+												th:value="${th.id}">
+											</option>
+										</select>
+									</form>
+								</div>
+							</div>
+
+							<div class="tile-body">
+								<h4>Danh sách sản phẩm bán chạy theo [[${ten}]]</h4>
+								<table class="table table-hover table-bordered" id="spbanchay">
+									<thead>
+										<tr>
+											<th><span>Mã sản phẩm</span></th>
+											<th><span>Tên sản phẩm</span></th>
+
+
+											<th><span>Số lượng bán</span></th>
+											<th><span>Giá tiền</span></th>
+
+											<th><span>Hãng phân phối</span></th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="itemsp, iterStat : ${listspbc}">
+											<td th:text="${itemsp[0]}"></td>
+											<td th:text="${itemsp[1]}"></td>
+
+
+											<td th:text="${itemsp[3]}"></td>
+											<td
+												th:text="${#numbers.formatDecimal(itemsp[2], 1, 'POINT', 0, 'DEFAULT')+'đ'}">
+											</td>
+
+											<td th:text="${itemsp[4]}"></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+
+					<!-- SẢN PHẨM BÁN CHẠY THEO Tháng -->
+					<div class="col-md-12">
+						<div class="tile">
+							<div>
+								<h3 class="tile-title">SẢN PHẨM BÁN CHẠY THEO THÁNG</h3>
+							</div>
+							<div class="col-sm-6">
+								<form th:action="@{/admin/spbanchay}" method="get" id="formthang">
+									<select class="form-control" name="thang" onchange="submitFormSPBC(this)">
+										<option value="" th:if="${thang1 != null}"
+											th:text="'Tháng đã chọn: ' + ${thang1}">
+										</option>
+
+										<option value="1">1</option>
+										<option value="2">2</option>
+										<option value="3">3</option>
+										<option value="4">4</option>
+										<option value="5">5</option>
+										<option value="6">6</option>
+										<option value="7">7</option>
+										<option value="8">8</option>
+										<option value="9">9</option>
+										<option value="10">10</option>
+										<option value="11">11</option>
+										<option value="12">12</option>
+									</select>
+								</form>
+							</div>
+							<br>
+							<div class="tile-body">
+								<table class="table table-hover table-bordered" id="sampleTable1">
+									<thead>
+										<tr>
+											<th><span>Mã sản phẩm</span></th>
+											<th><span>Tên sản phẩm</span></th>
+											<th><span>Số lượng bán</span></th>
+											<th><span>Giá tiền</span></th>
+											<th><span>Hãng phân phối</span></th>
+											<th><span>Ngày</span></th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr th:each="itemsp : ${listspbctheomonth}">
+											<td th:text="${itemsp[0]}"></td>
+											<td th:text="${itemsp[1]}"></td>
+											<td th:text="${itemsp[2]}"></td>
+											<td
+												th:text="${#numbers.formatDecimal(itemsp[3], 1, 'POINT', 0, 'DEFAULT')+'đ'}">
+											</td>
+											<td th:text="${itemsp[5]}"></td>
+											<td th:text="${#dates.format(itemsp[6],'dd/MM/yyyy')}"></td>
+
+										</tr> <!---->
+
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</main>
+</body>
+
+</html>

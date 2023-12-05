@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:fragment="admin(title,view)">
+
+<head>
+	<meta charset="utf-8">
+	<title th:replace="${title}"></title>
+	<!-- site icon -->
+	<link rel="shortcut icon" th:href="@{/images/iconadmin.jpg}" type="image/x-icon">
+ 
+
+	<!-- bootstrap css -->
+	<link rel="stylesheet" th:href="@{/admin/css/bootstrap.min.css}" />
+
+	<!-- site css -->
+	<link rel="stylesheet" th:href="@{/admin/css/style2.css}" />
+	<link rel="stylesheet" type="text/css" th:href="@{/admin/css/main.css}">
+	<link rel="stylesheet" th:href="@{https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css}">
+	<!-- or -->
+	<link rel="stylesheet" th:href="@{https://unpkg.com/boxicons@latest/css/boxicons.min.css}">
+
+	<!-- responsive css -->
+	<link rel="stylesheet" th:href="@{/admin/css/responsive.css}" />
+
+
+	<link th:href="@{/admin/css/font-awesome.min.css}" rel="stylesheet" />
+	<!-- select bootstrap -->
+	<link rel="stylesheet" th:href="@{/admin/css/bootstrap-select.css}" />
+
+	<!--  fomat tiền trong html-->
+	<script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js}"></script>
+
+	<!-- scrollbar css -->
+	<link rel="stylesheet" th:href="@{/admin/css/perfect-scrollbar.css}" />
+
+	<!-- Font-icon css-->
+	<link rel="stylesheet"
+		th:href="@{https://cdnjs.cloudflare.com/ajax/libs/jquery-confirm/3.3.2/jquery-confirm.min.css}">
+	<script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js}"></script>
+	<!-- CKEDITOR -->
+	<script type="text/javascript" th:src="@{/admin/ckeditor/ckeditor.js}"></script>
+
+
+	<script th:src="@{https://code.jquery.com/jquery-3.6.0.min.js}"></script>
+
+	<script type="text/javascript" th:src="@{/admin/js/bootstrap.min.js}"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-storage.js"></script>
+	<link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />
+	<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
+	<script>
+		const firebaseConfig = {
+			apiKey: "AIzaSyBqUqTaACE0KSCb0taV-aPrXJfW1MobwK0",
+			authDomain: "datn-6bb73.firebaseapp.com",
+			databaseURL: "https://datn-6bb73-default-rtdb.firebaseio.com",
+			projectId: "datn-6bb73",
+			storageBucket: "datn-6bb73.appspot.com",
+			messagingSenderId: "385334245569",
+			appId: "1:385334245569:web:7faa9bf5b2d930e0f67c40",
+			measurementId: "G-2M4HCHKDLW"
+		};
+		firebase.initializeApp(firebaseConfig);
+	</script>
+	<style>
+		.mgs_errors {
+			color: red;
+			font-style: italic;
+		}
+	</style>
+
+</head>
+
+<body class="dashboard dashboard_1" onload="myCustomFunction()">
+	<div class="full_container">
+		<div class="inner_container">
+			<!-- Sidebar  -->
+			<nav id="sidebar" class="ps">
+				<div class="sidebar_blog_1">
+					<div class="sidebar-header">
+						<div class="logo_section">
+							<a th:href="@{/admin/home}"><img class="logo_icon img-responsive"
+									th:src="@{/images/useran.jpg}" alt="#" /></a>
+						</div>
+					</div>
+					<div class="sidebar_user_info">
+						<div class="icon_setting"></div>
+						<div class="user_profle_side">
+							<div class="user_img">
+								<img class="img-responsive" th:src="@{/images/useran.jpg}" alt="#" />
+							</div>
+							<div class="user_info" th:object="${#request.userPrincipal}">
+								<h6>[[*{name}]]</h6>
+								<p>
+									<span class="online_animation"></span> Online
+								</p>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="sidebar_blog_2">
+					<h4>Chung</h4>
+					<ul class="list-unstyled components">
+						<li class="active"><a th:href="@{/admin/home}" aria-expanded="false"><i
+									class="fa fa-dashboard yellow_color"></i>
+								<span>Bảng điều khiển</span></a>
+						<li class="active"><a th:href="@{/admin/spbanchay}" aria-expanded="false">
+								<i class="fa fa-line-chart "></i>
+								<span>Sản phẩm bán chạy</span></a>
+						<li><a href="#element" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i
+									class="fa fa-table purple_color2"></i> <span>Quản lý</span></a>
+							<ul class="collapse list-unstyled" id="element">
+
+								<li><a th:href="@{/admin/qldanhmuc}">> <span>Danh mục
+										</span></a></li>
+
+								<li><a th:href="@{/admin/qlhieu}">> <span>Thương hiệu
+										</span></a></li>
+								<li><a th:href="@{/admin/qldanhgia}">> <span>Đánh giá
+										</span></a></li>
+								<li><a th:href="@{/admin/qltintuc}">> <span>Tin tức
+										</span></a></li>
+
+								<li><a th:href="@{/admin/qlsanpham}">> <span>Sản phẩm
+										</span></a></li>
+								<li><a th:href="@{/admin/qldonhang}">> <span>Đơn hàng</span></a></li>
+								<li><a th:href="@{/admin/qlkhachhang}">> <span>Khách
+											hàng</span></a></li>
+								<li><a th:href="@{/admin/sale}">> <span>Mã giảm giá
+										</span></a></li>
+							</ul>
+						</li>
+
+						<!-- <li><a th:href="@{/admin/qlnoibo}"><i class="fa fa-users blue2_color"
+									aria-hidden="true"></i><span>Quản
+									lý nội bộ</span></a></li> -->
+
+						<!-- <li><a th:href="@{/admin/lienhe}"> <i class="fa fa-paper-plane red_color"></i> <span>Liên
+									hệ</span></a></li> -->
+
+
+						<li><a href="#baocao" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i
+									class="fa fa-bar-chart-o green_color"></i> <span>Báo cáo
+									danh thu</span></a>
+							<ul class="collapse list-unstyled" id="baocao">
+								<li><a th:href="@{/admin/baocaochung}"> > <span>Chung</span></a></li>
+								<li><a th:href="@{/admin/baocaosanpham}"> > <span>Sản
+											phẩm</span></a></li>
+								<li><a th:href="@{/admin/baocaohoadon}">> <span>Hóa
+											đơn </span></a></li>
+							</ul>
+						</li>
+
+						<!-- <li><a href="#caidat" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i
+									class="fa fa-cog blue2_color"></i> <span>Cài đặt</span></a>
+
+							<ul class="collapse list-unstyled" id="caidat">
+
+								<li><a th:href="@{/admin/thongtin}"> <span>Thông tin</span></a></li>
+								<li><a href="/auth/logoff"> <span>Đăng xuất </span></a></li>
+							</ul>
+						</li> -->
+
+
+					</ul>
+				</div>
+			</nav>
+			<!-- end sidebar -->
+			<!-- right content -->
+			<div id="content">
+				<!-- topbar -->
+				<div class="topbar">
+					<nav class="navbar navbar-expand-lg navbar-light">
+						<div class="full">
+							<button type="button" id="sidebarCollapse" class="sidebar_toggle">
+								<i class="fa fa-bars"></i>
+							</button>
+							<!-- <div class="logo_section">
+								<a href="index.html"><img class="img-responsive" th:src="@{/images/logo/logoadm.png}"
+										alt="#" /></a>
+							</div> -->
+							<div class="right_topbar">
+								<div class="icon_info">
+									<!-- <ul>
+										<li><a href="#"><i class="fa fa-bell-o"></i><span class="badge">2</span></a>
+										</li>
+										<li><a href="#"><i class="fa fa-question-circle"></i></a></li>
+										<li><a href="#"><i class="fa fa-envelope-o"></i><span class="badge">3</span></a>
+										</li>
+									</ul> -->
+
+									<ul class="user_profile_dd" th:object="${#request.userPrincipal}">
+
+										<li><a class="dropdown-toggle" data-toggle="dropdown"><img
+													class="img-responsive rounded-circle"
+													th:src="@{/images/useran.jpg}" alt="#" /><span
+													class="name_user">[[*{name}]]</span></a>
+											<div class="dropdown-menu">
+												<a class="dropdown-item" th:href="@{/admin/thongtin}"><span>Thông
+														tin</span>
+												</a>
+												<a class="dropdown-item" href="/auth/logoff"><span>Đăng xuất</span>
+													<i class="fa fa-sign-out"></i></a>
+											</div>
+										</li>
+									</ul>
+
+								</div>
+							</div>
+						</div>
+					</nav>
+				</div>
+				<!-- end topbar -->
+				<!-- View layout -->
+				<main th:replace="${view}"></main>
+				<!--end view layout -->
+				<!-- footer -->
+				<div class="container-fluid">
+					<div class="footer">
+						<p>Copyright © 2023 Designed by Nguyễn Văn Viễn. All rights
+							reserved.</p>
+					</div>
+				</div>
+			</div>
+			<!-- end dashboard inner -->
+		</div>
+	</div>
+
+	<!-- Thư viện xuất file excel -->
+	<script th:src="@{/admin/js/table2excel.js}"></script>
+	<script th:inline="javascript">
+		function myCustomFunction() {
+			var today = new Date();
+			var weekday = new Array(7);
+			weekday[0] = "Chủ Nhật";
+			weekday[1] = "Thứ Hai";
+			weekday[2] = "Thứ Ba";
+			weekday[3] = "Thứ Tư";
+			weekday[4] = "Thứ Năm";
+			weekday[5] = "Thứ Sáu";
+			weekday[6] = "Thứ Bảy";
+			var day = weekday[today.getDay()];
+			var dd = today.getDate();
+			var mm = today.getMonth() + 1;
+			var yyyy = today.getFullYear();
+			var h = today.getHours();
+			var m = today.getMinutes();
+			var s = today.getSeconds();
+			m = checkTime(m);
+			s = checkTime(s);
+			nowTime = h + " giờ " + m + " phút " + s + " giây";
+			if (dd < 10) {
+				dd = '0' + dd
+			}
+			if (mm < 10) {
+				mm = '0' + mm
+			}
+			today = day + ', ' + dd + '/' + mm + '/' + yyyy;
+			tmp = '<span class="date"> ' + today + ' - ' + nowTime +
+				'</span>';
+			document.getElementById("clock").innerHTML = tmp;
+			clocktime = setTimeout("myCustomFunction()", 1000);
+
+			function checkTime(i) {
+				if (i < 10) {
+					i = "0" + i;
+				}
+				return i;
+			}
+		}
+		document.addEventListener("DOMContentLoaded", function () {
+			myCustomFunction();
+		});
+	</script>
+	<!-- Thư viện xuất file pdf -->
+	<script th:src="@{/admin/js/html2pdf.bundle.min.js}"></script>
+	<script th:src="@{/admin/js/script.js}"></script>
+	<!-- jQuery -->
+
+	<script th:src="@{/admin/js/popper.min.js}"></script>
+
+	<script th:src="@{https://unpkg.com/sweetalert/dist/sweetalert.min.js}"></script>
+
+	<!-- wow animation -->
+	<script src="https://code.highcharts.com/highcharts.js"></script>
+	<script src="https://code.highcharts.com/modules/data.js"></script>
+	<script src="https://code.highcharts.com/modules/exporting.js"></script>
+	<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+	<!-- select country -->
+	<script th:src="@{/admin/js/bootstrap-select.js}"></script>
+
+	<!-- owl carousel -->
+	<script th:src="@{/admin/js/owl.carousel.js}"></script>
+
+	<!-- chart js -->
+
+	<!--  <script th:src="@{/admin/js/chart.js}"></script> -->
+	<script th:src="@{/admin/js/chart_custom_style1.js}"></script>
+	<script th:src="@{/admin/js/utils.js}"></script>
+
+	<script th:src="@{/admin/js/pace.min.js}"></script>
+
+	<!-- nice scrollbar -->
+	<script th:src="@{/admin/js/perfect-scrollbar.min.js}"></script>
+
+	<script type="text/javascript" th:src="@{/admin/plugins/jquery.dataTables.min.js}"></script>
+
+
+	<script type="text/javascript" th:src="@{/admin/plugins/dataTables.bootstrap.min.js}"></script>
+
+	<!-- custom js -->
+	<script th:src="@{/admin/js/custom.js}"></script>
+
+
+
+
+
+
+</body>
+
+</html>

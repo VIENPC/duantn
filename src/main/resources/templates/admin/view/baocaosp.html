@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{admin/layout/layout :: admin(~{::title},~{::body})}">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Thống kê sản phẩm</title>
+</head>
+
+<body>
+    <main class="app-content">
+        <div class="app-title">
+            <ul class="app-breadcrumb breadcrumb side">
+                <li class="breadcrumb-item active">
+                    <a><b>Thống kê sản phẩm</b></a>
+                </li>
+            </ul>
+            <div id="clock"></div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="tile">
+                    <div class="tile-body">
+                        <div class="row element-button">
+                            <div class="col-sm-2">
+                                <a class="btn btn-delete btn-sm print-file" type="button" title="In"
+                                    onclick="myApp.printTable()"><i class="fa fa-print"></i> In dữ liệu</a>
+                            </div>
+
+                            <div class="col-sm-2">
+                                <a class="btn btn-excel btn-sm export" title="Xuất file excel"><i class="fa fa-file-excel-o"></i>
+                                    Xuất Excel</a>
+                            </div>
+                            <div class="col-sm-2">
+                                <a class="btn btn-delete btn-sm pdf-file" title="Xuất file pdf"><i class="fa fa-file-pdf-o"></i>
+                                    Xuất PDF</a>
+                            </div>
+                            <div class="col-sm-2">
+                                <a class="btn btn-add btn-sm" title="" data-toggle="modal" data-target="#modeltkn"><i
+                                        class="fa fa-calendar" aria-hidden="true"></i>Thống kê
+                                    theo ngày</a>
+                            </div>
+                            <div class="col-sm-2">
+                                <form th:action="@{/admin/thongke}" method="post" id="formhang">
+                                    <select class="btn btn-delete btn-sm nhap-tu-file" id="hangSanXuatSelect"
+                                        name="mahang" onchange="submitForm()">
+                                        <option value="">- Thống kê theo hãng --</option>
+                                        <option th:each="th : ${listhh}" th:text="${th.tenthuonghieu}"
+                                            th:value="${th.id}"></option>
+                                    </select>
+                                </form>
+                            </div>
+                            <div class="col-sm-2">
+                                <form th:action="@{/admin/thongkedm}" method="post" id="formdm">
+                                    <select class="btn btn-delete btn-sm nhap-tu-file" id="madm" name="madm"
+                                        onchange="submitFormdm()">
+                                        <option value="">- Thống kê danh mục --</option>
+                                        <option th:each="dm : ${listdm}" th:text="${dm.tennhom}"
+                                            th:value="${dm.manhom}"></option>
+                                    </select>
+
+                                </form>
+                            </div>
+                        </div>
+                        <div id="sampleTable_wrapper"
+                            class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table class="table table-hover table-bordered" id="sampleTable">
+										<thead>
+										
+												<tr>
+
+                                                    <th><span>ID</span></th>
+                                                    <th><span>Tên sản phẩm</span></th>
+                                                    <th><span>Số lượng</span></th>
+                                                    <th><span>Giá tiền</span></th>
+                                                    <th><span>Tổng tiền</span></th>
+                                                    <th><span>Hãng phân phối</span></th>
+                                                </tr>
+											
+										</thead>
+										<tbody>
+											<tr th:each="itemsp : ${itemtksp}">
+                                                <td th:text="${itemsp[0]}"></td>
+                                                <td th:text="${itemsp[1]}"></td>
+                                                <td th:text="${itemsp[2]}"></td>
+                                                <td
+                                                    th:text="${#numbers.formatDecimal(itemsp[3], 1, 'POINT', 0, 'DEFAULT')+'đ'}">
+                                                </td>
+                                                <td
+                                                    th:text="${#numbers.formatDecimal((itemsp[3] *itemsp[2]), 1, 'POINT', 0, 'DEFAULT')+'đ'}">
+                                                </td>
+                                                <td th:text="${itemsp[5]}"></td>
+
+
+                                                <!-- Cập nhật giá trị của biến totalTongGiaHang -->
+
+                                            </tr>
+                                            
+
+ 
+										</tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th colspan="4">Tổng cộng:</th>
+
+                                                <td
+                                                    th:text="${#numbers.formatDecimal(tongcong, 1, 'POINT', 0, 'DEFAULT')+'đ'}">
+                                                </td>
+                                                <td></td>
+                                            </tr>
+                                        </tfoot>
+									</table>
+
+                                    <table class="table table-hover table-bordered" id="table">
+										<thead>
+                                            <tr>
+												<th colspan="6" style="text-align: center; font-size: 25px; font-weight: bold ;">BÁO CÁO SẢN PHẨM</th>
+											</tr>
+												<tr>
+
+                                                    <th><span>ID</span></th>
+                                                    <th><span>Tên sản phẩm</span></th>
+                                                    <th><span>Số lượng</span></th>
+                                                    <th><span>Giá tiền</span></th>
+                                                    <th><span>Tổng tiền</span></th>
+                                                    <th><span>Hãng phân phối</span></th>
+                                                </tr>
+											
+										</thead>
+										<tbody>
+											<tr th:each="itemsp : ${itemtksp}">
+                                                <td th:text="${itemsp[0]}"></td>
+                                                <td th:text="${itemsp[1]}"></td>
+                                                <td th:text="${itemsp[2]}"></td>
+                                                <td
+                                                    th:text="${#numbers.formatDecimal(itemsp[3], 1, 'POINT', 0, 'DEFAULT')+'đ'}">
+                                                </td>
+                                                <td
+                                                    th:text="${#numbers.formatDecimal((itemsp[3] *itemsp[2]), 1, 'POINT', 0, 'DEFAULT')+'đ'}">
+                                                </td>
+                                                <td th:text="${itemsp[5]}"></td>
+
+
+                                                <!-- Cập nhật giá trị của biến totalTongGiaHang -->
+
+                                            </tr>
+                                            
+
+ 
+										</tbody>
+                                        <tfoot>
+                                            <tr>
+                                                <th colspan="4">Tổng cộng:</th>
+
+                                                <td
+                                                    th:text="${#numbers.formatDecimal(tongcong, 1, 'POINT', 0, 'DEFAULT')+'đ'}">
+                                                </td>
+                                                <td></td>
+                                            </tr>
+                                        </tfoot>
+									</table>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal thống kê theo ngày sp -->
+    <div class="modal fade" id="modeltkn" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static"
+        data-keyboard="false">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <span class="thong-tin-thanh-toan">
+                                <h5>Chọn ngày</h5>
+                            </span>
+                        </div>
+                    </div>
+                    <form th:action="@{/admin/thongkesptg}" class="row" onsubmit="return validateForm()">
+                        <div class="col-6">
+                            <label class="control-label">Ngày bắt đầu:</label>
+                            <input type="date" class="form-control" name="startDate" id="startDate" required />
+                        </div>
+                        <div class="col-6">
+                            <label class="control-label">Ngày kết thúc:</label>
+                            <input type="date" class="form-control" name="endDate" id="endDate" oninput="validateDate()" required />
+                            <div id="error-message" style="color: red;"></div>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-save" type="submit" id="submitButton" >Xem</button>
+                            <a class="btn btn-cancel" data-dismiss="modal" href="#">Hủy bỏ</a>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- Modal thống kê theo ngày sp -->
+</body>
+
+</html>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{admin/layout/layout :: admin(~{::title},~{::body})}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Xem hóa đơn chi tiết</title>
+</head>
+
+<body>
+    <main class="app-content">
+        <div class="app-title">
+            <ul class="app-breadcrumb breadcrumb side">
+                <li class="breadcrumb-item active"><a th:href="@{/admin/qldanhgia}"><b>Danh sách đánh giá</b></a></li>
+                <li class="breadcrumb-item"><a>Chi tiết đánh giá
+                    </a></li>
+            </ul>
+            <div id="clock"></div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="tile">
+                    <div class="tile-body">
+                        <div class="row element-button">
+                            <div class="col-sm-2">
+                                <a class="btn btn-delete btn-sm print-file" type="button" title="In"
+                                    onclick="myApp.printTable()"><i class="fa fa-print"></i> In dữ liệu</a>
+                            </div>
+
+
+                            <div class="col-sm-2">
+                                <a class="btn btn-excel btn-sm export" title="Xuất file excel"><i
+                                        class="fa fa-file-excel-o"></i>
+                                    Xuất Excel</a>
+                            </div>
+                            <div class="col-sm-2">
+                                <a class="btn btn-delete btn-sm pdf-file" type="button" title="In"
+                                    onclick="myFunction(this)"><i class="fa fa-file-pdf-o"></i> Xuất PDF</a>
+                            </div>
+
+                        </div>
+
+                        <table class="table table-hover table-bordered" id="sampleTable">
+                            <thead>
+                                <tr>
+
+
+                                    <th><span>ID</span></th>
+
+                                    <th><span>Người đánh giá </span></th>
+                                    <th><span>Số sao</span></th>
+                                    <th><span>Nội dung đánh giá</span></th>
+                                    <th><span>Ngày đánh giá</span></th>
+                                    <th><span>Chức năng</span></th>
+
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="dg : ${listdg}">
+
+                                    <td th:text="${dg.id}"></td>
+                                    <td th:text="${dg.khachhang.hotenkh}"></td>
+                                    <td th:text="${dg.sodanhgia}"></td>
+                                    <td th:text="${dg.noidungdg}">
+                                    <td th:text="${#temporals.format(dg.ngaydanhgia, 'dd-MM-yyyy HH:mm:ss')}"></td>
+
+                                    <td><button class="btn btn-primary btn-sm trash" type="button" title="Xóa"
+                                            th:attr="data-iddg=${dg.id}">
+                                            <i class="fa fa-trash-o"></i>
+                                        </button></td>
+
+
+                                </tr>
+
+
+
+
+                            </tbody>
+
+                        </table>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+</body>
+
+</html>

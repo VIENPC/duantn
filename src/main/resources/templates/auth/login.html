@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8">
+	<title>Tài khoản</title>
+	<link rel="icon" th:href="@{/images/fevicon.png}" type="image/png" />
+	<link rel="stylesheet" type="text/css" th:href="@{/css/sign-in.css}">
+	<link rel="stylesheet" th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css}">
+	<script th:src="@{https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js}"></script>
+</head>
+
+<body>
+	<div class="container" id="container">
+		<div class="form-container sign-up-container">
+			<form action="/auth/sign-up" th:object="${kh}" id="signupForm">
+				<h1>Đăng kí</h1>
+				<div class="social-container">
+					<a href="/oauth2/authorization/facebook" class="social"><i class="fab fa-facebook-f"></i></a> <a
+						href="/oauth2/authorization/google" class="social"><i class="fab fa-google-plus-g"></i></a>
+
+				</div>
+				<span>hoặc sử dụng tài khoản của bạn</span> <input type="text" placeholder="Username"
+					th:field="*{usernamekh}" />
+
+				<input type="email" placeholder="Email" th:field="*{email}" required
+					pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+					title="Email không đúng định dạng (Ví dụ: example@example.com)" />
+
+				<input type="password" placeholder="Password" th:field="*{passwordkh}" />
+
+				<button type="button" onclick="submitForm()">Đăng kí</button>
+			</form>
+		</div>
+		<div class="form-container sign-in-container">
+			<form action="/auth/login" method="post">
+				<h1>Đăng nhập</h1>
+				<div class="social-container">
+					<a href="/oauth2/authorization/facebook" class="social"><i class="fab fa-facebook-f"></i></a> <a
+						href="/oauth2/authorization/google" class="social"><i class="fab fa-google-plus-g"></i></a>
+
+				</div>
+				<span>hoặc sử dụng tài khoản của bạn</span> <input type="text" name="username" placeholder="Username"
+					required /> <input type="password" name="password" placeholder="Password" required />
+				<a href="#">Quên mật khẩu?</a>
+
+				<button>Đăng nhập</button>
+			</form>
+		</div>
+		<div class="overlay-container">
+			<div class="overlay">
+				<div class="overlay-panel overlay-left">
+					<h1>Chào mừng trở lại!</h1>
+					<p>Để giữ kết nối với chúng tôi, vui lòng đăng nhập bằng thông
+						tin cá nhân của bạn</p>
+					<button class="ghost" id="signIn">Đăng nhập</button>
+				</div>
+				<div class="overlay-panel overlay-right">
+					<h1>Chào bạn!</h1>
+					<p>Nhập thông tin cá nhân của bạn và bắt đầu mua sắm với chúng
+						tôi</p>
+					<button class="ghost" id="signUp">Đăng kí</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	<script th:src="@{https://unpkg.com/sweetalert/dist/sweetalert.min.js}"></script>
+	<script>
+
+		function submitForm() {
+			var form = document.getElementById('signupForm');
+			var username = form.usernamekh.value;
+			var email = form.email.value;
+			var password = form.passwordkh.value;
+			var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+			if (!emailPattern.test(email)) {
+				alert("Email không đúng định dạng")
+				return;
+			}
+			if (!username || !email || !password) {
+				// Nếu thông tin không hợp lệ, hiển thị thông báo lỗi
+				alert("Vui lòng nhập đầy đủ thông tin")
+				return;
+			} else {
+
+				// Gửi dữ liệu form bằng AJAX
+				var xhr = new XMLHttpRequest();
+				xhr.open('POST', '/auth/sign-up', true);
+				xhr.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+				xhr.onreadystatechange = function () {
+					if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+
+						swal("Thành công", "Vui lòng kiểm tra email để cập nhật thông tin", "success")
+					}
+				};
+				var formData = 'usernamekh=' + encodeURIComponent(username) +
+					'&email=' + encodeURIComponent(email) +
+					'&passwordkh=' + encodeURIComponent(password);
+				xhr.send(formData);
+			}
+		}
+
+
+
+
+
+
+		function removeSuccessParamFromURL() {
+			if (window.history && window.history.replaceState) {
+				var url = window.location.href;
+				var urlParams = new URLSearchParams(window.location.search);
+				urlParams.delete('success');
+				var newURL = url.split('?')[0] + urlParams.toString();
+				window.history.replaceState({}, '', newURL);
+			}
+		}
+		function removeFailParamFromURL() {
+			if (window.history && window.history.replaceState) {
+				var url = window.location.href;
+				var urlParams = new URLSearchParams(window.location.search);
+				urlParams.delete('fail');
+				var newURL = url.split('?')[0] + urlParams.toString();
+				window.history.replaceState({}, '', newURL);
+			}
+		}
+		window.onload = function () {
+			var urlParams = new URLSearchParams(window.location.search);
+			var successParam = urlParams.get('success');
+			var failParam = urlParams.get('fail');
+			if (successParam == 'success') {
+				showFailMessage("Đăng xuất thành công");
+				removeSuccessParamFromURL()
+			}
+
+			if (failParam == 'login') {
+				showFailMessage("Đăng nhập  thất bại");
+				removeFailParamFromURL();
+			}
+			if (failParam == 'dk') {
+				showFailMessage("Đăng kí thất bại");
+				removeFailParamFromURL();
+			}
+		}
+		function showFailMessage(message) {
+			swal("Thông báo", message, "error");
+		}
+		function showSuccessMessage(message) {
+			swal("Thông báo", message, "success");
+		}
+
+		const signInButton = document.getElementById('signIn');
+		const signUpButton = document.getElementById('signUp');
+		const container = document.getElementById('container');
+
+		// Kiểm tra xem các biến có tồn tại và có trỏ tới phần tử DOM hay không
+
+		// Gắn sự kiện click vào các nút bằng hàm thông thường
+		signInButton.addEventListener('click', function () {
+			container.classList.remove('right-panel-active');
+		});
+
+		signUpButton.addEventListener('click', function () {
+			container.classList.add('right-panel-active');
+		});
+	</script>
+
+
+
+
+
+	<!-- <h3>Login Form</h3>
+	<hr>
+	<i th:text="${message}" style="color:red"></i>
+	<form action="/auth/login" method="post">
+		<input name="username" placeholder="Username?"><br>
+		<input name="password" placeholder="Password?"><br>
+		<input type="checkbox" name="remember"> Remember me?<br>
+		<button>Login</button>
+	</form> -->
+</body>
+
+</html>

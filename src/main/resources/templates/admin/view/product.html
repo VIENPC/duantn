@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{admin/layout/layout :: admin(~{::title},~{::body})}">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Quản lý| Sản phẩm</title>
+</head>
+
+<body>
+	<main class="app-content">
+		<div class="app-title">
+			<ul class="app-breadcrumb breadcrumb side">
+				<li class="breadcrumb-item active"><a th:href="@{/admin/qlsanpham}"><b>Danh
+							sách sản phẩm </b></a></li>
+			</ul>
+			<div id="clock"></div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="tile">
+					<div class="tile-body">
+						<div class="row element-button">
+							<div class="col-sm-2">
+								<a class="btn btn-add btn-sm" th:href="@{/admin/addsanpham}" title="Thêm"><i
+										class="fa fa-plus"></i> Tạo mới sản phẩm</a>
+							</div>
+			
+
+							<div class="col-sm-2">
+								<a class="btn btn-delete btn-sm print-file" type="button" title="In"
+									onclick="myApp.printTable()"><i class="fa fa-print"></i> In dữ liệu</a>
+							</div>
+							
+
+							<div class="col-sm-2">
+
+								<a class="btn btn-excel btn-sm export" title="=Xuất file excel"><i
+										class="fa fa-file-excel-o"></i>
+									Xuất Excel</a>
+							</div>
+							<div class="col-sm-2">
+								<a class="btn btn-delete btn-sm pdf-file" type="button" title="Xuất file fpf"><i
+										class="fa fa-file-pdf-o"></i> Xuất PDF</a>
+							</div>
+							
+						</div>
+						<div id="sampleTable_wrapper"
+							class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+
+							<div class="row">
+								<div class="col-sm-12">
+									<table class="table table-hover table-bordered" id="sampleTable">
+										<thead>
+											<tr>
+												
+												<th><span>ID</span></th>
+												<th width="300px"><span>Tên sản phẩm</span></th>
+												<th><span>Ảnh</span></th>
+												<th><span>Số lượng</span></th>
+												<th><span>Tình trạng</span></th>
+												<th><span>Giá tiền</span></th>
+												<th><span>Thương hiệu</span></th>
+												<th><span>Loại</span></th>
+												<th><span>Chức năng</span></th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:each="sp : ${listsp}">
+												
+												<td th:text="${sp.masp}"></td>
+
+												<td th:text="${sp.tensp}"></td>
+												<td><img th:src="@{'/images/sanpham/' + ${sp.hinhanh}}" alt=""
+														width="100px;"></td>
+												<td th:text="${sp.soluong}"></td>
+												<td><span class="badge bg-success" th:if="${sp.trangthaisp == true}">Còn
+														hàng</span> <span class="badge bg-danger"
+														th:unless="${sp.trangthaisp == true}">Hết hàng</span></td>
+												<td><span
+														th:text="${#numbers.formatDecimal(sp.giasp, 1, 'POINT', 0, 'DEFAULT')+'đ'}"></span>
+												</td>
+												<td th:text="${sp.thuonghieu.tenthuonghieu}"></td>
+													<td th:text="${sp.nhomsanpham.tennhom}">
+												</td>
+												<td><button class="btn btn-primary btn-sm trash" type="button"
+														title="Xóa" th:attr="data-masp=${sp.masp}">
+														<i class="fa fa-trash-o"></i>
+													</button>
+													<!-- <a th:href="@{/edit/{masp}(masp=${sp.masp})}" class="btn btn-primary btn-sm edit" ><i class="fa fa-edit"></i></a> -->
+
+
+													<button class="btn btn-primary btn-sm edit"
+														th:onclick="'javascript:editsp(' + ${sp.masp} + ')'">
+														<i class="fa fa-edit"></i>
+													</button>
+												</td>
+
+
+											</tr>
+
+
+
+
+
+										</tbody>
+									</table>
+									<table class="table table-hover table-bordered"  id="table">
+										<thead>
+											<tr>
+												<th colspan="8" style="text-align: center; font-size: 25px; font-weight: bold ;">DANH SÁCH SẢN PHẨM</th>
+											</tr>
+											<tr>  
+
+												<th><span>ID</span></th>
+												<th width="300px"><span>Tên sản phẩm</span></th>
+												<th><span>Ảnh</span></th>
+												<th><span>Số lượng</span></th>
+												<th><span>Tình trạng</span></th>
+												<th><span>Giá tiền</span></th>
+												<th><span>Thương hiệu</span></th>
+												<th><span>Loại</span></th>
+												
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:each="sp : ${listsp}">
+												
+												<td th:text="${sp.masp}"></td>
+
+												<td th:text="${sp.tensp}"></td>
+												<td><img th:src="@{'/images/sanpham/' + ${sp.hinhanh}}" alt=""
+														width="100px;"></td>
+												<td th:text="${sp.soluong}"></td>
+												<td><span class="badge bg-success" th:if="${sp.trangthaisp == true}">Còn
+														hàng</span> <span class="badge bg-danger"
+														th:unless="${sp.trangthaisp == true}">Hết hàng</span></td>
+												<td><span
+														th:text="${#numbers.formatDecimal(sp.giasp, 1, 'POINT', 0, 'DEFAULT')+'đ'}"></span>
+												</td>
+												<td th:text="${sp.thuonghieu.tenthuonghieu}"></td>
+													<td th:text="${sp.nhomsanpham.tennhom}">
+												</td>
+												
+
+											</tr>
+
+
+
+
+
+										</tbody>
+									</table>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+	<!--
+  MODAL
+-->
+	<div class="modal fade" id="modalsp" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static"
+		data-keyboard="false">
+		<div class="modal-dialog modal-dialog-centered" role="document">
+			<div class="modal-content">
+				<form method="post" th:action="@{/admin/qlsanpham/updatesp}">
+					<div class="modal-body">
+						<div class="row">
+							<div class="form-group  col-md-12">
+								<span class="thong-tin-thanh-toan">
+									<h5>Chỉnh sửa thông tin sản phẩm cơ bản</h5>
+								</span>
+							</div>
+						</div>
+						<div class="row">
+							<div class="form-group col-md-6">
+								<label class="control-label">Mã sản phẩm </label> <input class="form-control" id="masp"
+									type="number" name="masp" disabled>
+									<input type="hidden" id="masp_hidden" name="masp_hidden">
+							</div>
+							<div class="form-group  col-md-6">
+								<label class="control-label">Số lượng</label> <input class="form-control" type="number"
+			 						name="soluong" id="soluong" required>
+							</div> 
+							<div class="form-group col-md-12">
+								<label class="control-label">Tên sản phẩm</label> <input class="form-control"
+									type="text" id="tensp" name="tensp" required>
+							</div>
+
+							<div class="form-group col-md-6 ">
+								<label for="tinhtrang" class="control-label">Tình
+									trạng sản phẩm</label> <select class="form-control" name="trangthai" id="trangthai">
+									<option value="true">Còn hàng</option>
+									<option value="false">Hết hàng</option>
+
+								</select>
+							</div>
+							<div class="form-group col-md-6">
+								<label class="control-label">Giá bán</label> <input class="form-control" type="text"
+									name="giasp" id="giasp" required>
+							</div>
+
+						</div>
+						<a onclick="checkmasp()" ; id="editLink" href="javascript:;"
+							style="float: right; font-weight: 600; color: #ea0000;">Chỉnh
+							sửa sản phẩm nâng cao</a> <BR> <BR>
+						<button class="btn btn-save" type="submit">Lưu lại</button>
+						<a class="btn btn-cancel" data-dismiss="modal">Hủy bỏ</a>
+						<BR>
+					</div>
+
+				</form>
+			</div>
+		</div>
+	</div>
+	<!--
+MODAL
+-->
+
+
+	<!-- Button trigger modal -->
+
+	<!-- Modal -->
+
+
+
+
+
+</body>
+
+</html>

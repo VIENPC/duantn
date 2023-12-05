@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{admin/layout/layout :: admin(~{::title},~{::body})}">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Thêm tin tức</title>
+
+	
+</head>
+
+<body>
+	<main class="app-content">
+		<div class="app-title"> 
+			<ul class="app-breadcrumb breadcrumb">
+				<li class="breadcrumb-item"><a th:href="@{/admin/qltintuc}">Danh
+						sách tin</a></li>
+				<li class="breadcrumb-item"><a>Tạo mới tin
+					</a></li>
+			</ul>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="tile">
+					<h3 class="tile-title">Thêm tin mới </h3>
+					<div class="tile-body">
+
+						<form class="row" th:action="@{/admin/qltintuc/save}" method="post" th:object="${tt}" 	enctype="multipart/form-data">
+							<div class="form-group col-5 ">
+								<label for="" class="control-label">Tên sản phẩm
+								</label> <br>
+ 
+								
+								<select  class="form-control js-example-basic-single"  th:field="*{sanpham}" >
+									<option value="">-- Chọn sản phẩm --</option>
+									<option th:each="sp : ${listsp}" th:text="${sp.tensp}" th:value="${sp.masp}">
+									</option>
+								</select> 
+								<i th:errors="*{sanpham}" class="mgs_errors"></i><br>
+
+							</div>
+
+							<div class="form-group col-md-7">
+								<label class="control-label">Tiêu đề</label> <input class="form-control" type="text"
+									th:field="*{tieude}">
+									<i th:errors="*{tieude}" class="mgs_errors"></i><br>
+
+							</div>
+							<div class="form-group col-12">
+								<label class="control-label">Chọn hình ảnh</label> 
+								<input type="file" name="hinh"> 
+								<i th:text="${message_img}" class="mgs_errors"></i><br>
+							</div>
+							<div class="form-group col-md-12">
+								<label class="control-label">Nội dung tin:</label>
+								<textarea class="form-control" name="tintuc" id="tintuc"
+									th:field="*{noidung}"></textarea>
+
+								<script>
+									CKEDITOR.replace('tintuc');
+								</script>
+								<i th:errors="*{noidung}" class="mgs_errors"></i><br>
+
+							</div>
+
+							<button class="btn btn-save ml-3">Lưu lại</button>
+							<a class="btn btn-cancel ml-3" th:href="@{/admin/qltintuc}">Trở lại</a>
+						</form>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</main>
+
+</body>
+
+</html>

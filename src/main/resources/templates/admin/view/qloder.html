@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{admin/layout/layout :: admin(~{::title},~{::body})}">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Quản lý | Đơn hàng</title>
+</head>
+
+<body>
+
+    <main class="app-content">
+        <div class="app-title">
+            <ul class="app-breadcrumb breadcrumb side">
+                <li class="breadcrumb-item active"><a href="#"><b>Danh sách đơn hàng</b></a></li>
+            </ul>
+            <div id="clock"></div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="tile">
+                    <div class="tile-body">
+                        <div class="row element-button">
+                            <div class="col-sm-2">
+                                <a class="btn btn-delete btn-sm print-file" type="button" title="In"
+                                    onclick="myApp.printTable()"><i class="fa fa-print"></i> In dữ liệu</a>
+                            </div>
+                       
+
+                            <div class="col-sm-2">
+                                <a class="btn btn-excel btn-sm export" title="Xuất file excel"><i
+                                        class="fa fa-file-excel-o"></i>
+                                    Xuất Excel</a>
+                            </div>
+                            <div class="col-sm-2">
+                                <a class="btn btn-delete btn-sm pdf-file" type="button" title="Xuất file pdf"><i
+                                        class="fa fa-file-pdf-o"></i> Xuất PDF</a>
+                            </div>
+                            
+                        </div>
+
+                        <table class="table table-hover table-bordered" id="sampleTable">
+                            <thead>
+                                <tr>
+                                   
+                                    <th><span>ID</span></th>
+                                    <th width="150px"><span>Khách hàng</span></th>
+                                    <th width="80px"><span>Tổng tiền</span></th>
+                                    <th width="170px"><span>Địa chỉ</span></th>
+                                    <th width="50px"><span>Điện thoại</span></th>
+                                    <th><span>Ngày mua</span></th>
+                                    <th ><span>Trạng thái thanh toán</span></th>
+                                    <th><span>Tình trạng</span></th>
+                                    <th width="80px"><span>Tính năng</span></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                               
+                                    <tr th:each="hd : ${listhd}">
+                                       
+                                        <td th:text="${hd.mahd}"></td>
+                                        <td th:text="${hd.tennguoinhan}"></td>
+                                        <td
+                                            th:text="${#numbers.formatDecimal(hd.tongtien, 1, 'POINT', 0, 'DEFAULT')+'đ'}">
+                                        </td>
+                                        <td th:text="${hd.diachinn}"></td>
+                                        <td th:text="${hd.dienthoainn}"></td>
+                                        <td th:text="${#dates.format(hd.ngaymua,'dd-MM-yyyy')}"></td> 
+                                        
+                                        <td >
+                                            <span class="badge bg-warning" th:if="${hd.trangthaitt == false}">Chờ thanh toán</span>
+                                            <span class="badge bg-success" th:if="${hd.trangthaitt == true}">Đã thanh toán</span>
+                                            
+                                          
+                                        </td> 
+                                        <td>
+                                            <span th:if="${hd.trangthaihd == 1}" class="badge bg-info">Chờ xác
+                                                nhận</span>
+                                            <span th:if="${hd.trangthaihd == 2}" class="badge bg-warning">Đã xác nhận
+                                            </span>
+                                            <span th:if="${hd.trangthaihd == 3}" class="badge bg-primary">Đang giao
+                                            </span> 
+                                            <span th:if="${hd.trangthaihd == 4}" class="badge bg-success">Hoàn
+                                                thành</span> 
+                                            <span th:if="${hd.trangthaihd == 5}" class="badge bg-danger">Đã hủy</span>
+                                        </td>
+
+                                        <td>
+                                            <a class="btn btn-primary btn-sm "
+                                                th:href="@{'/admin/xemhoadonct/'+${hd.mahd}}"><i class="fa fa-eye"
+                                                    aria-hidden="true"></i></a>
+                                            <a class="btn btn-add btn-sm settt" th:hidden="${hd.trangthaihd == 4}"
+                                            th:onclick="'javascript:edithd(' + ${hd.mahd} + ')'"> <i class="fa fa-pencil-square-o"
+                                                    aria-hidden="true"></i></a>
+
+                                        </td>
+                                    </tr>
+                              
+                            </tbody>
+                        </table>
+                        <table class="table table-hover table-bordered" id="table">
+                            <thead>
+                                <tr>
+                                    <th colspan="8"
+                                        style="text-align: center; font-size: 25px; font-weight: bold ;">
+                                        DANH SÁCH ĐƠN HÀNG</th>
+                                </tr>
+                                <tr>
+                                   
+                                     <th><span>ID</span></th>
+                                    <th width="150px"><span>Khách hàng</span></th>
+                                    <th width="80px"><span>Tổng tiền</span></th>
+                                    <th width="170px"><span>Địa chỉ</span></th>
+                                    <th width="50px"><span>Điện thoại</span></th>
+                                    <th><span>Ngày mua</span></th>
+                                    <th ><span>Trạng thái thanh toán</span></th>
+                                    <th><span>Tình trạng</span></th>
+                                   
+                                </tr>
+                            </thead>
+                            <tbody>
+                               
+                                    <tr th:each="hd : ${listhd}">
+                                    
+                                        <td th:text="${hd.mahd}"></td>
+                                        <td th:text="${hd.tennguoinhan}"></td>
+                                        <td
+                                            th:text="${#numbers.formatDecimal(hd.tongtien, 1, 'POINT', 0, 'DEFAULT')+'đ'}">
+                                        </td>
+                                        <td th:text="${hd.diachinn}"></td>
+                                        <td th:text="${hd.dienthoainn}"></td>
+                                        <td th:text="${#dates.format(hd.ngaymua,'dd-MM-yyyy')}"></td> 
+                                        
+                                        <td >
+                                            <span class="badge bg-warning" th:if="${hd.trangthaitt == false}">Chờ thanh toán</span>
+                                            <span class="badge bg-success" th:if="${hd.trangthaitt == true}">Đã thanh toán</span>
+                                            
+                                          
+                                        </td> 
+                                        <td>
+                                            <span th:if="${hd.trangthaihd == 1}" class="badge bg-info">Chờ xác
+                                                nhận</span>
+                                            <span th:if="${hd.trangthaihd == 2}" class="badge bg-warning">Đã xác nhận
+                                            </span>
+                                            <span th:if="${hd.trangthaihd == 3}" class="badge bg-primary">Đang giao
+                                            </span> 
+                                            <span th:if="${hd.trangthaihd == 4}" class="badge bg-success">Hoàn
+                                                thành</span> 
+                                            <span th:if="${hd.trangthaihd == 5}" class="badge bg-danger">Đã hủy</span>
+                                        </td>
+
+                                       
+                                    </tr>
+                              
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    
+    <!-- Modal -->
+    <div class="modal fade" id="edittt" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Cập nhật trạng thái đơn hàng</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form th:action="@{/admin/updatetthd}" method="post">
+                        <input type="hidden" class="form-control" name="mahd"   id="mahd">
+                        <select class="form-control" name="tinhtrang" id="tinhtrang">
+                            <option value="1">Chờ xác nhận</option>
+                            <option value="2">Đã xác nhận</option>
+                            <!-- <option value="3">Đang giao</option> -->
+                            <!-- <option value="4">Hoàn thành</option> -->
+                            <option value="5">Đã hủy</option>
+ 
+                        </select>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                            <button type="submit" class="btn btn-primary"  >Xác nhận</button>
+                        </div>
+                    </form>
+
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+
+</body>
+
+</html>

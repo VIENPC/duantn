@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{banhang/layout/layout :: banhang(~{::title},~{::main})}">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NVA3 | Đăng ký</title>
+</head>
+
+<body>
+	<main>
+
+
+		<!-- Start Banner Area -->
+		<section class="banner-area organic-breadcrumb">
+			<div class="container">
+				<div
+					class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+					<div class="col-first">
+						<h1>Đăng nhập/Đăng ký</h1>
+						<nav class="d-flex align-items-center">
+							<a th:href="@{/index}">Trang chủ<span
+								class="lnr lnr-arrow-right"></span></a> <a href="category.html">Đăng
+								nhập/Đăng ký</a>
+						</nav>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- End Banner Area -->
+
+		<!--================Login Box Area =================-->
+		<section class="login_box_area section_gap">
+			<div class="container">
+				<div class="row">
+					<div class="col-12" th:if="${message}">
+						<div class="alert alert-warning p-3 text-center slide-from-left">
+							<i class="text-danger" th:text="${message}"></i>
+						</div>
+					</div>
+					<div class="col-lg-6">
+						<div class="login_box_img">
+							<img class="img-fluid" th:src="@{/images/login.jpg}" alt="">
+							<div class="hover">
+								<h4>BẠN ĐÃ CÓ TÀI KHOẢN?</h4>
+								<p>Bắt đầu đăng nhập và trải nghiệm các dịch vụ mua sắm
+									ngay!</p>
+								<a class="primary-btn" th:href="@{/login}">Đăng nhập tại đây</a>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-6">
+						<div class="login_form_inner">
+							<h3>Đăng Ký Tài Khoản</h3>
+							<form th:action="@{/create}" method="post" th:object="${account}"
+								class="row login_form" action="" id="contactForm"
+								novalidate="novalidate">
+								<div class="col-md-12 form-group">
+									<input type="text" class="form-control" th:field="*{email}"
+										name="email" placeholder="Email"
+										onfocus="this.placeholder = ''"
+										onblur="this.placeholder = 'Email'" ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/">
+								</div>
+								<div class="col-md-12 form-group">
+									<input type="text" class="form-control"
+										th:field="*{usernamekh}" name="username"
+										placeholder="Tài khoản" onfocus="this.placeholder = ''"
+										onblur="this.placeholder = 'Tài khoản'">
+								</div>
+								<div class="col-md-12 form-group">
+									<input class="form-control" th:field="*{passwordkh}"
+										name="password" type="password" placeholder="Mật khẩu"
+										onfocus="this.placeholder = ''"
+										onblur="this.placeholder = 'Mật khẩu'"   ng-pattern="/^(?=.*[A-Z]).{6,}$/">
+								</div>
+								<div class="col-md-12 form-group">
+									<input class="form-control" name="confirm" type="password"
+										placeholder="Nhập lại mật khẩu"
+										onfocus="this.placeholder = ''"
+										onblur="this.placeholder = 'Nhập lại mật khẩu'">
+								</div>
+								<div class="col-md-12 form-group">
+									<button type="submit" value="submit" class="primary-btn">Đăng
+										Ký</button>
+									<a th:href="@{/auth/signup/form}">Bạn đã có tài khoản?</a>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!--================End Login Box Area =================-->
+
+	</main>
+</body>
+
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{banhang/layout/layout :: banhang(~{::title},~{::main})}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NVA3 | Tin tức</title>
+</head>
+
+<body>
+    <main ng-controller="blogctrl">
+        <!-- Start Banner Area -->
+        <section class="banner-area organic-breadcrumb">
+            <div class="container">
+                <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+                    <div class="col-first">
+                        <h1>Tin tức</h1>
+                        <nav class="d-flex align-items-center">
+                            <a th:href="@{/index}">Trang chủ<span class="lnr lnr-arrow-right"></span></a>
+                            <a href="">Tin tức</a>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- End Banner Area -->
+
+        <!--================Blog Categorie Area =================-->
+        <section class="blog_categorie_area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="categories_post">
+                            <img src="images/blog/tindhtt.jpg" alt="post">
+                            <div class="categories_details">
+                                <div class="categories_text">
+                                    <a href="blog-details.html">
+                                        <h5>Đồng hồ thời trang</h5>
+                                    </a>
+                                    <div class="border_line"></div>
+                                    <p>Đồng hồ thật giá trị thật</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="categories_post">
+                            <img src="images/blog/dhtm.webp" alt="post">
+                            <div class="categories_details">
+                                <div class="categories_text">
+                                    <a href="blog-details.html">
+                                        <h5>Đồng hồ thông minh</h5>
+                                    </a>
+                                    <div class="border_line"></div>
+                                    <p>Đồng hành cùng bạn trong mọi khoảnh khắc.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="categories_post">
+                            <img src="images/blog/dhcd3.jpg" alt="post">
+                            <div class="categories_details">
+                                <div class="categories_text">
+                                    <a href="blog-details.html">
+                                        <h5>Đồng hồ cặp đôi</h5>
+                                    </a>
+                                    <div class="border_line"></div>
+                                    <p>Chia sẻ mỗi khoảnh khắc đặc biệt.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--================Blog Categorie Area =================-->
+
+        <!--================Blog Area =================-->
+        <section class="blog_area">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="blog_left_sidebar">
+
+                            <article class="row blog_item" ng-repeat="t in getCurrentPageTintucs()">
+
+                                <div class="col-md">
+                                    <div class="blog_post">
+                                        <img ng-src="images/blog/{{t.hinhanh}}" alt="" ng-click="goToSinglePage(t.id)" style="cursor: pointer">
+                                        <div class="blog_details">
+                                            <a href="" ng-click="goToSinglePage(t.id)">
+                                                <h2>{{t.tieude}}</h2>
+                                            </a>
+                                            <p ng-bind-html="t.noidung|limitTo: 500 |unsafeHtml  "></p>
+
+                                            <!-- <p ng-bind-html="t.noidung | unsafeHtml | limitTo: 100"></p> -->
+                                            <!-- <span ng-if="t.noidung.length > 100">...</span> -->
+                                            <a href="" class="white_bg_btn" ng-click="goToSinglePage(t.id)">Đọc thêm </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </article>
+
+                            <nav class="blog-pagination justify-content-center d-flex">
+                                <ul class="pagination">
+                                    <li class="page-item">
+                                        <a href="#" class="page-link" aria-label="Previous" ng-click="goToPage(currentPage - 1)">
+                                            <span aria-hidden="true">
+                                                <span class="lnr lnr-chevron-left"></span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                    <li class="page-item" ng-repeat="page in getPageArray(totalPages)">
+                                        <a href="#" class="page-link" ng-click="goToPage(page)" ng-class="{ 'active': page === currentPage }">
+                                            {{ page }}
+                                        </a>
+                                    </li>
+                                    <li class="page-item">
+                                        <a href="#" class="page-link" aria-label="Next" ng-click="goToPage(currentPage + 1)">
+                                            <span aria-hidden="true">
+                                                <span class="lnr lnr-chevron-right"></span>
+                                            </span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="blog_right_sidebar">
+                            <aside class="single_sidebar_widget search_widget">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" placeholder="Tìm kiếm tin"
+                                        onfocus="this.placeholder = ''" onblur="this.placeholder = 'Tìm kiếm tin'" ng-model="search">
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-default" type="button" ng-click="timktin()"><i
+                                                class="lnr lnr-magnifier"></i></button>
+                                    </span>
+                                </div><!-- /input-group -->
+                                <div class="br"></div>
+                            </aside>
+                          
+                            
+                           
+                                <aside class="single_sidebar_widget post_category_widget">
+                                    <h4 class="widget_title">Danh mục bài viết</h4>
+                                    <ul class="list cat-list">
+                                        <li ng-repeat="dm in counttin">
+                                            <a href="#" class="d-flex justify-content-between">
+                                                <p>{{dm[0]}}</p>
+                                                <p>{{dm[1]}}</p>
+                                            </a>
+                                        </li>
+                                       
+                                    
+                                    </ul>
+                                
+                                </aside>
+                            
+                          
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--================Blog Area =================-->
+    </main>
+
+
+</body>
+
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{banhang/layout/layout :: banhang(~{::title},~{::main})}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NVA3 | Kiểm tra đơn hàng</title>
+</head>
+
+<body>
+    <main ng-controller="kiemtractrl">
+
+        <!-- Start Banner Area -->
+        <section class="banner-area organic-breadcrumb">
+            <div class="container">
+                <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+                    <div class="col-first">
+                        <h1>Tìm kiếm đơn hàng</h1>
+                        <nav class="d-flex align-items-center">
+                            <a th:href="@{/index}">Trang chủ<span class="lnr lnr-arrow-right"></span></a>
+                            <a th:href="@{/tracking}">Tìm kiếm đơn hàng</a>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- End Banner Area -->
+
+        <!--================Tracking Box Area =================-->
+        <section class="tracking_box_area section_gap">
+            <div class="container">
+                <div class="tracking_box_inner">
+                    <p>Để theo dõi đơn hàng của bạn, vui lòng nhập ID đơn hàng của bạn vào ô bên dưới và nhấn nút "Theo
+                        dõi". Này
+                        đã được trao cho bạn trên biên lai của bạn và trong email xác nhận bạn nên nhận được.</p>
+                    <div class="row tracking_form" >
+                        <div class="col-md-12 form-group">
+                            <input type="number" class="form-control" id="order" name="order" placeholder="Mã đơn hàng"
+                                ng-model="mahd" required>
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <input type="email" class="form-control" id="email" name="email"
+                                placeholder="Email đơn hàng" ng-model="email" required  ng-pattern="/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/"> 
+                        </div>
+                        <div class="col-md-12 form-group">
+                            <button type="button" class="primary-btn" ng-click="kt()">Kiểm tra đơn hàng</button>
+                        </div>
+                    </div>
+                </div>
+                <article class="card mt-3">
+
+                    <div class="card-body">
+
+                        <article class="card">
+                            <div class="card-body row">
+                                <div class="col-2"> <strong>Mã hóa đơn:</strong> <br>{{trackinghd.mahd}} </div>
+                                <div class="col-2"> <strong>Ngày đặt:</strong> <br> {{trackinghd.ngaymua | date:
+                                    'dd/MM/yyyy'}}
+                                </div>
+                                <div class="col-6"> <strong>Thông tin nhận hàng:</strong> <br> {{trackinghd.diachinn}}
+                                    |<i class="fa fa-phone"></i> {{trackinghd.dienthoainn}}
+                                </div>
+                                <div class="col-2"> <strong>Trạng thái đơn hàng:</strong> <br> <span ng-if="trackinghd.trangthaihd == 1" >Chờ xác
+                                    nhận</span>
+                                <span  ng-if="trackinghd.trangthaihd == 2" >Đã xác nhận
+                                </span>
+                                <span  ng-if="trackinghd.trangthaihd == 3" >Đang giao
+                                </span> 
+                                <span  ng-if="trackinghd.trangthaihd == 4" >Hoàn
+                                    thành</span> 
+                                    <span  ng-if="trackinghd.trangthaihd == 5" >Đã 
+                                        hủy</span> 
+                               </div>
+                            </div>
+                        </article>
+                        <div class="track">
+                            <div ng-class="{'step active': trackinghd.trangthaihd == 1 || trackinghd.trangthaihd == 2 || trackinghd.trangthaihd == 3 || trackinghd.trangthaihd == 4, 'step': trackinghd.trangthaihd != 1}"> <span class="icon"> <i class="fa fa-user"></i> </span> <span
+                                    class="text">Chờ xác nhận</span>
+                            </div>
+                            <div ng-class="{'step active': trackinghd.trangthaihd == 2 || trackinghd.trangthaihd == 3 || trackinghd.trangthaihd == 4, 'step': trackinghd.trangthaihd != 2}"> <span class="icon"> <i class="fa fa-check"></i> </span> <span
+                                    class="text">
+                                    Đã xác nhận</span> </div>
+                            <div ng-class="{'step active': trackinghd.trangthaihd == 3 || trackinghd.trangthaihd == 4, 'step': trackinghd.trangthaihd != 3}"> <span class="icon"> <i class="fa fa-truck"></i> </span> <span
+                                    class="text">
+                                    Đang giao </span> </div>
+                            <div ng-class="{'step active': trackinghd.trangthaihd == 4 , 'step': trackinghd.trangthaihd != 4}"> <span class="icon"> <i class="fa fa-check"></i></span> <span
+                                    class="text">
+                                    Hoàn thành</span> </div>
+                        </div>
+                        <hr>
+                        <ul class="row">
+                            <li class="col-md-4" ng-repeat="hdct in hdcts">
+                                <figure class="itemside mb-3">
+                                    <div class="aside"><img ng-src="images/sanpham/{{hdct.sanpham.hinhanh}}"
+                                            class="img-sm border">
+                                    </div>
+                                    <figcaption class="info align-self-center">
+                                        <p class="title">{{hdct.sanpham.tensp}}</p> <span
+                                            class="text-muted">{{hdct.sanpham.giasp.toLocaleString('vi-VN')}}đ</span>
+                                    </figcaption>
+                                </figure>
+                            </li>
+
+                        </ul>
+
+
+                    </div>
+                </article>
+            </div>
+        </section>
+        <!--================End Tracking Box Area =================-->
+
+
+    </main>
+</body>
+
+</html>

@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html th:replace="~{banhang/layout/layout :: banhang(~{::title},~{::main})}">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>NVA3 | Trang chủ</title>
+	
+</head>
+
+<body>
+	<main ng-controller="homectrl">
+
+		<!-- start banner Area -->
+		<section class="banner-area mt-4">
+			<div class="container">
+				<div class="row fullscreen align-items-center justify-content-start">
+					<div class="col-lg-12">
+						<div class="active-banner-slider owl-carousel">
+							<!-- single-slide -->
+							<div class="row single-slide align-items-center d-flex">
+								<div class="col-lg-5 col-md-6">
+									<div class="banner-content">
+										<h1>
+											Đồng Hồ <br>Thông Minh
+										</h1>
+										<p>Đồng hồ thông minh không chỉ đơn thuần là một công cụ
+											đo thời gian, mà còn là một trợ thủ đa năng thú vị. Với sự
+											kết hợp của công nghệ và thiết kế hiện đại, nó giúp bạn không
+											chỉ kiểm soát thời gian một cách chính xác mà còn đồng hành
+											cùng bạn trong cuộc sống hàng ngày. Từ việc theo dõi sức
+											khỏe, quản lý lịch trình đến thông báo tin tức, đồng hồ thông
+											minh là một phần không thể thiếu của cuộc sống hiện đại, mang
+											lại sự tiện ích và phong cách.</p>
+										
+									</div>
+								</div>
+								<div class="col-lg-7">
+									<div class="banner-img">
+										<img class="img-fluid" src="images/banner/banner1.png" alt="">
+									</div>
+								</div>
+							</div>
+							<!-- single-slide -->
+							<div class="row single-slide">
+								<div class="col-lg-5">
+									<div class="banner-content">
+										<h1>
+											Đồng Hồ <br>Thời Trang
+										</h1>
+										<p>Đồng hồ thời trang - Kết hợp hoàn hảo giữa thời gian và
+											phong cách, thể hiện cá tính và gu thời trang. Thiết kế tinh
+											tế, từ cổ điển đến hiện đại, làm từ chất liệu cao cấp, biến
+											bạn thành biểu tượng thời trang.</p>
+										
+									</div>
+								</div>
+								<div class="col-lg-7">
+									<div class="banner-img">
+										<img class="img-fluid" src="images/banner/banner2.png" alt="">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- End banner Area -->
+<!-- start features Area -->
+<section class="features-area section_gap">
+	<div class="container">
+		<div class="row features-inner">
+			<!-- single features -->
+			<div class="col-lg-3 col-md-6 col-sm-6">
+				<div class="single-features">
+					<div class="f-icon">
+						<img src="images/features/f-icon1.png" alt="">
+					</div>
+					<h6>Vận chuyển</h6>
+					<p>Miễn phí vận chuyển giá trị cao</p>
+				</div>
+			</div>
+			<!-- single features -->
+			<div class="col-lg-3 col-md-6 col-sm-6">
+				<div class="single-features">
+					<div class="f-icon">
+						<img src="images/features/f-icon2.png" alt="">
+					</div>
+					<h6>Đổi trả</h6>
+					<p>Đổi trả nhanh chóng</p>
+				</div>
+			</div>
+			<!-- single features -->
+			<div class="col-lg-3 col-md-6 col-sm-6">
+				<div class="single-features">
+					<div class="f-icon">
+						<img src="images/features/f-icon3.png" alt="">
+					</div>
+					<h6>Hỗ trợ</h6>
+					<p>Chăm sóc khách hàng 24/7</p>
+				</div>
+			</div>
+			<!-- single features -->
+			<div class="col-lg-3 col-md-6 col-sm-6">
+				<div class="single-features">
+					<div class="f-icon">
+						<img src="images/features/f-icon4.png" alt="">
+					</div>
+					<h6>Thanh toán</h6>
+					<p>Thanh toán nhanh chóng</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- end features Area -->
+		
+
+		<!-- Start category Area -->
+		<section class="category-area">
+			<div class="container">
+				<div class="row justify-content-center">
+					<div class="col-lg-8 col-md-12">
+						<div class="row">
+							<div class="col-lg-8 col-md-8">
+								<div class="single-deal" ng-click="goToCategory(2)">
+									<div class="overlay"></div>
+									<img class="img-fluid w-100" th:src="@{images/sd/3.png}" alt="">
+									<a >
+										<div class="deal-details">
+											<h6 class="deal-title">Đồng hồ thời trang</h6>
+										</div>
+									</a>
+								</div>
+							</div>
+							<div class="col-lg-4 col-md-4">
+								<div class="single-deal" ng-click="goToCategory(1)">
+									<div class="overlay"></div>
+									<img class="img-fluid w-100" th:src="@{images/sd/1.jpg}" alt="">
+									<a >
+										<div class="deal-details">
+											<h6 class="deal-title">Đồng hồ thông minh</h6>
+										</div>
+									</a>
+								</div>
+							</div>
+							<div class="col-lg-4 col-md-4" >
+								<div class="single-deal" ng-click="goToCategory(3)">
+									<div class="overlay"></div>
+									<img class="img-fluid w-100" th:src="@{/images/sd/2.png}" alt="">
+									<a>
+										<div class="deal-details">
+											<h6 class="deal-title">Đồng hồ nam</h6>
+										</div>
+									</a>
+								</div>
+							</div>
+							<div class="col-lg-8 col-md-8">
+								<div class="single-deal" ng-click="goToCategory(4)">
+									<div class="overlay"></div>
+									<img class="img-fluid w-100" th:src="@{images/sd/5.jpg}" alt="">
+									<a >
+										<div class="deal-details">
+											<h6 class="deal-title">Đồng hồ nữ</h6>
+										</div>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-4 col-md-6">
+						<div class="single-deal">
+							<div class="overlay"></div>
+							<img class="img-fluid w-100" th:src="@{images/sd/c5.jpg}" alt="">
+							<a th:href="@{/shop}">
+								<div class="deal-details">
+									<h6 class="deal-title">Tất cả sản phẩm</h6>
+								</div>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- End category Area -->
+		<!-- start product Area -->
+		
+		<section class="owl-carousel active-product-area section_gap">
+			<!-- single product slide -->
+			<div class="single-product-slider">
+				<div class="container">
+					<div class="row justify-content-center">
+						<div class="col-lg-6 text-center">
+							<div class="section-title">
+								<h1>Sản Phẩm Mới</h1>
+								<p>Sản phẩm mới: Đồng hồ thông minh hiện đại và đa năng!</p>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<!-- single product -->
+						<div class="col-lg-3 col-md-6" ng-repeat="spn in sanphamnews">
+							<div class="single-product" >
+								<img  ng-click="goToSinglePage(spn.masp)" class="img-fluid" ng-src="/images/sanpham/{{spn.hinhanh}}" alt=""  style=" cursor: pointer;">
+								<div class="product-details">
+									<a href="" ng-click="goToSinglePage(spn.masp)"><h6 style="height: 50px;">{{spn.tensp.length > 40 ? (spn.tensp | limitTo: 40) + '...' : spn.tensp}}</h6></a>
+									<div class="price mt-3" >
+										<h6>{{spn.giasp.toLocaleString('vi-VN')}}đ</h6>
+									</div>
+									<div class="prd-bottom">
+										<button class="add-to-cart" ng-click="addToCart(spn.masp)">
+											<div class="default">Thêm vào giỏ hàng</div>
+											<div class="success">Added</div>
+											<div class="cart">
+												<div>
+													<div></div>
+													<div></div>
+												</div>
+											</div>
+											<div class="dots"></div>
+										</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						
+						
+						
+						
+					</div>
+				</div>
+			</div>
+			<!-- single product slide -->
+			<div class="single-product-slider">
+				<div class="container">
+					<div class="row justify-content-center">
+						<div class="col-lg-6 text-center">
+							<div class="section-title">
+								<h1>Sản Phẩm Nổi Bật</h1>
+								<p>Đồng hồ bán chạy: Phong cách và độ chính xác đỉnh cao!.</p>
+							</div>
+						</div> 
+					</div>
+					<div class="row">
+						<!-- single product -->
+						<div class="col-lg-3 col-md-6" ng-repeat="sp in totalItems | limitTo:8">
+							<div class="single-product">
+								<img ng-click="goToSinglePage(sp.masp)" class="img-fluid" ng-src="images/sanpham/{{sp.hinhanh}}" alt=""  style=" cursor: pointer;">
+								<div class="product-details">
+									<a href="" ng-click="goToSinglePage(sp.masp)"><h6 style="height: 50px;">{{sp.tensp.length > 40 ? (sp.tensp | limitTo: 40) + '...' : sp.tensp}}</h6></a>
+									<div class="price mt-3">
+										<h6>{{sp.giasp.toLocaleString('vi-VN')}}đ</h6>
+
+									</div>
+									<div class="prd-bottom">
+
+										<button class="add-to-cart" ng-click="addToCart(sp.masp)">
+											<div class="default">Thêm vào giỏ hàng</div>
+											<div class="success">Added</div>
+											<div class="cart">
+												<div>
+													<div></div>
+													<div></div>
+												</div>
+											</div>
+											<div class="dots"></div>
+										</button>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- end single product -->
+					</div>
+				</div>
+			</div>	
+		</section>
+		<!-- end product Area -->
+		
+		<!-- Start brand Area -->
+		<section class="brand-area section_gap">
+			<div class="container">
+				<div class="row">
+					<a class="col single-img" href="#"> <img class="img-fluid d-block mx-auto" src="images/brand/6.png"
+							alt="">
+					</a> <a class="col single-img" href="#"> <img class="img-fluid d-block mx-auto"
+							src="images/brand/7.png" alt="">
+					</a> <a class="col single-img" href="#"> <img class="img-fluid d-block mx-auto"
+							src="images/brand/8.png" alt="">
+					</a> <a class="col single-img" href="#"> <img class="img-fluid d-block mx-auto"
+							src="images/brand/9.png" alt="">
+					</a> <a class="col single-img" href="#"> <img class="img-fluid d-block mx-auto"
+							src="images/brand/10.png" alt="">
+					</a>
+				</div>
+			</div>
+		</section>
+		<!-- End brand Area -->
+	</main>
+</body>
+
+</html>

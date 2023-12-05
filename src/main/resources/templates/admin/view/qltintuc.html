@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{admin/layout/layout :: admin(~{::title},~{::body})}">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Quản lý | Tin tức</title>
+</head>
+ 
+<body>
+	<main class="app-content">
+		<div class="app-title">
+			<ul class="app-breadcrumb breadcrumb side">
+				<li class="breadcrumb-item active"><a th:href="@{/admin/qldanhmuc}"><b>
+							Tin tức </b></a></li>
+			</ul>
+			<div id="clock"></div>
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="tile">
+					<div class="tile-body">
+						<div class="row element-button">
+							<div class="col-sm-2">
+								<a class="btn btn-add btn-sm" th:href="@{/admin/addtintuc}" title="Thêm"><i
+										class="fa fa-plus"></i> Thêm tin tức</a>
+							</div>
+
+							
+						</div>
+						<div id="sampleTable_wrapper"
+							class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+
+							<div class="row">
+								<div class="col-sm-12">
+									<table class="table table-hover table-bordered" id="sampleTable">
+										<thead>
+											<tr>
+												
+												<th><span>ID</span></th>
+												<th><span>Hình ảnh</span></th>
+
+												<th><span>Tiêu đề</span></th>
+
+												<th><span>Người tạo</span></th>
+												<th><span>Ngày đăng</span></th>
+												<th><span>Chức năng</span></th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr th:each="tin : ${listtin}">
+												
+												<td th:text="${tin.id}"></td>
+												<td><img th:src="@{'/images/sanpham/' + ${tin.sanpham.hinhanh}}"
+														width="100px;" alt=""></td>
+												<td th:text="${tin.tieude}"></td>
+												<td th:text="${tin.khachhang.hotenkh}"></td>
+												<td th:text="${#temporals.format(tin.ngaydang, 'dd-MM-yyyy HH:mm:ss')}"></td>
+
+												<td>
+													<a class="btn btn-primary btn-sm trash" type="button" title="Xóa"
+													th:attr="data-idtin=${tin.id}">
+														<i class="fa fa-trash-o"></i>
+													</a>
+													<a class="btn btn-add btn-sm settt" th:onclick="'javascript:edittin(' + ${tin.id} + ')'"> <i
+															class="fa fa-pencil-square-o" aria-hidden="true"></i></a>
+
+												</td>
+												<!-- <td th:text="${#dates.format(tin.ngaydang, 'dd/MM/yyyy hh:mm:ss')}"> </td> -->
+
+
+											</tr>
+
+
+
+
+										</tbody>
+									</table>
+								</div>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+
+	 
+
+	<div class="modal fade bd-example-modal-lg" id="edittin" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-lg">
+		<div class="modal-content">
+		 <div class="modal-header">
+			Cập nhật tin tức 
+		 </div> 
+		 <div class="modal-body">
+			<form class="row" th:action="@{/admin/updatetin}" method="post" >
+				<div class="form-group col-5 ">
+					<label for="" class="control-label">Tên sản phẩm
+					</label> <br>
+
+					
+					<select class="form-control" name="masp" id="tensp">
+					
+						<option th:each="sp : ${listsp}" th:text="${sp.tensp}" th:value="${sp.masp}">
+						</option>
+					</select>
+
+				</div>
+				<div class="form-group col-md-7">
+					<label class="control-label">Tiêu đề</label> <input class="form-control" type="text"
+						id="tieude" name="tieude" required>
+					<input type="hidden" id="id" name="id">
+				</div>
+				<div class="form-group col-md-12">
+					<label class="control-label">Nội dung tin:</label>
+					<textarea class="form-control" name="noidung" id="noidung" required
+						></textarea>
+
+					<script>
+						CKEDITOR.replace('noidung');
+					</script>
+
+				</div>
+				<button class="btn btn-save ml-3">Lưu lại</button>
+				<a class="btn btn-cancel ml-3">Đóng</a>
+			</form>
+		 </div>
+		</div>
+	  </div>
+	</div>
+
+
+
+</body>
+
+</html>

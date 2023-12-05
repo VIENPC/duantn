@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{banhang/layout/layout :: banhang(~{::title},~{::main})}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NVA3 | Tin Tức</title>
+</head>
+<body>
+    <main ng-controller="blog-detail">
+         <!-- Start Banner Area -->
+    <section class="banner-area organic-breadcrumb">
+        <div class="container">
+            <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+                <div class="col-first">
+                    <h1>Tin tức chi tiết</h1>
+                    <nav class="d-flex align-items-center">
+                        <a th:href="@{/index}">Trang chủ<span class="lnr lnr-arrow-right"></span></a>
+                        <a href="">Tin tức</a>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Banner Area -->
+
+    <!--================Blog Area =================-->
+    <section class="blog_area single-post-area section_gap">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 posts-list">
+                    <div class="single-post row">
+                        <div class="col-lg-12">
+                            <div class="feature-img">
+                                <img class="img-fluid" ng-src="/images/blog/{{tintucct.hinhanh}}" alt="">
+                            </div>
+                        </div>
+                       
+                        <div class="col-lg col-md blog_details">
+                            <h2>{{tintucct.tieude}}</h2>
+                            <p class="excert" ng-bind-html="displayedDescription">
+                              
+                            </p>
+                            <div class="text-center">
+                                <button class="btn btn-info" ng-click="toggleDescription()">{{ buttonText }}</button>
+                            </div>
+                            
+                        </div>
+                       
+                    </div>
+                   
+                    
+                </div>
+                <div class="col-lg-4">
+                    <div class="blog_right_sidebar">
+                       
+                       
+                        <aside class="single_sidebar_widget popular_post_widget">
+                            <h3 class="widget_title">Tin tức liên quan</h3>
+                            <div class="media post_item" ng-repeat="t in tintucs" ng-if="t.id != tintucct.id">
+                                <img ng-src="/images/blog/{{t.hinhanh}}" alt="post" width="60px" ng-click="goToSinglePage(t.id)"  style="cursor: pointer">
+                                <div class="media-body">
+                                    <a href="" ng-click="goToSinglePage(t.id)">
+                                        <h3>{{t.tieude}}</h3>
+                                    </a>
+                                    <p>{{ t.ngaydang | date:'dd-MM-yyyy HH:mm:ss' }}</p>
+                                </div>
+                            </div>
+                            
+                            <div class="br"></div>
+                        </aside>
+                        
+                        <aside class="single_sidebar_widget post_category_widget">
+                            <h4 class="widget_title">Danh mục bài đăng</h4>
+                            <ul class="list cat-list">
+                                <li ng-repeat="dm in counttin">
+                                    <a href="#" class="d-flex justify-content-between">
+                                        <p>{{dm[0]}}</p>
+                                        <p>{{dm[1]}}</p>
+                                    </a>
+                                </li>
+                                
+                               
+                            </ul>
+                           
+                        </aside>
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!--================Blog Area =================-->
+    </main>
+</body>
+</html>

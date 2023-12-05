@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{admin/layout/layout :: admin(~{::title},~{::body})}">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Thông tin</title>
+	<style>
+		label{
+			font-style: bold;
+		}
+	</style>
+
+<body>
+	<main class="app-content">
+		<div class="app-title">
+			<ul class="app-breadcrumb breadcrumb side">
+				<li class="breadcrumb-item active"><a th:href="@{/admin/thongtin}"><b>Thông tin
+						</b></a></li>
+			</ul>
+			<div id="clock"></div>
+		</div>
+		<div class="row column1">
+			<div class="col-md-2"></div>
+			<div class="col-md-8">
+				<div class="white_shd full margin_bottom_30">
+					<div class="full graph_head">
+						<div class="heading1 margin_0">
+							<h2>Thông tin người dùng</h2>
+						</div>
+					</div>
+					<div class="full price_table padding_infor_info">
+						<div class="row">
+							<!-- user profile section -->
+							<!-- profile image -->
+							<div class="col-lg-12">
+								<div class="full dis_flex center_text">
+									<div class="profile_img"><img width="180" class="rounded-circle"
+											src="/images/useran.jpg" alt="#" /></div>
+									<div class="profile_contant">
+										<form th:action="@{/admin/upadmin}">
+											<div class="form-group">
+												<label for="">Tên đăng nhập:</label> <label for="" ><b
+														th:text="${ad.usernamekh}" ></b></label>
+														<input type="hidden" name="us" th:value="${ad.usernamekh}" readonly>
+											</div>
+											<div class="form-group">
+												<label for="">Họ và tên:</label>
+												<input type="text" class="form-control" placeholder="Họ và tên"
+													required th:value="${ad.hotenkh}" name="ht">
+											</div>
+											<div class="form-group">
+												<label for="inputEmail">Email: </label> <input type="email" name="em"
+													class="form-control" id="" placeholder="Email" required th:value="${ad.email}">
+											</div>
+											<div class="form-group">
+												<label>Giới tính: </label>
+												<div class="custom-control custom-radio custom-control-inline">
+
+													<input type="radio" id="customRadioInline1"
+													name="gt" class="custom-control-input" th:checked="${ad.gioitinh == true}">
+													<label class="custom-control-label"
+														for="customRadioInline1" name="gt">Nam</label>
+												</div>
+												<div class="custom-control custom-radio custom-control-inline">
+													<input type="radio" id="customRadioInline2"
+													name="gt"   th:checked="${ad.gioitinh == false}" class="custom-control-input">
+													<label class="custom-control-label"
+														for="customRadioInline2">Nữ</label>
+												</div>
+											</div>
+											<div class="form-group">
+												<label for="">Số điện thoại:</label>
+												<input type="tel" class="form-control" name="sdt" pattern="^(0[2-9])(\d{8})$"
+													id="sdt" placeholder="Số điện thoại" required th:value="${ad.dienthoai}">
+											</div>
+											<div class="form-group">
+												<label for="">Địa chỉ:</label> <input type="text"
+													class="form-control" id="" name="dc" placeholder="Địa chỉ"th:value="${ad.diachi}">
+											</div>
+											<button type="submit" class="btn" style="font-size: 20px; background-color: dodgerblue; color: whitesmoke; border: none; width: 150px; ">Cập nhật </button>
+										</form>
+
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-2"></div>
+			</div>
+			<!-- end row -->
+	</main>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html th:replace="~{banhang/layout/layout :: banhang(~{::title},~{::main})}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NVA3 | Giỏ hàng</title>
+</head>
+
+<body>
+    <main ng-controller="cartctrl">
+        <!-- Start Banner Area -->
+        <section class="banner-area organic-breadcrumb">
+            <div class="container">
+                <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+                    <div class="col-first">
+                        <h1>Giỏ hàng</h1>
+                        <nav class="d-flex align-items-center">
+                            <a th:href="@{/index}">Trang chủ<span class="lnr lnr-arrow-right"></span></a>
+                            <a th:href="@{cart}">Giỏ hàng</a>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- End Banner Area -->
+
+        <!--================Cart Area ================= -->
+        <section class="cart_area">
+            <div class="container"> 
+                <div class="cart_inner">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th width="10px"><input type="checkbox" ng-model="selectAll" 
+                                        ng-change="selectAllItems()" id="checkAll"></th>
+                                    <th scope="col">Sản phẩm</th>
+                                    <th scope="col">Giá</th>
+                                    <th scope="col">Số lượng</th>
+                                    <th scope="col">Tổng</th>
+                                    <th scope="col"><a href="" ng-click="deleteSelectedItems()">Xóa</a></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="cart in carts">
+                                    <td class="product-total" width="10px"><input type="checkbox"
+                                        ng-model="cart.selected" class="checkbox" ng-change="updateSelectAllCheckbox()">
+                                    </td>
+
+                                    <td>
+                                        <div class="media">
+                                            <div class="d-flex" >
+                                                <img ng-src="images/sanpham/{{cart.sanpham.hinhanh}}" width="100px"
+                                                    alt="" ng-click="goToSinglePage(cart.sanpham.masp)">
+                                            </div>
+                                            <div class="media-body" ng-click="goToSinglePage(cart.sanpham.masp)">
+                                                <p>{{ cart.sanpham.tensp | limitTo: 50 }}{{ cart.sanpham.tensp.length > 20 ? '...' : '' }}</p>
+                                            </div>
+                                            
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <h5>{{cart.giasp.toLocaleString('vi-VN')}}đ</h5>
+                                     </td>
+                                    <td>
+                                        <div class="product_count">
+                                            <input type="number" name="qty" ng-model="cart.soluong" maxlength="12" class="input-text qty" disabled>
+                                            <button ng-click="updateQuantity(cart, 'increment')" class="increase items-count" type="button"><i class="lnr lnr-chevron-up"></i></button>
+                                            <button ng-click="updateQuantity(cart, 'decrement')" class="reduced items-count" type="button"><i class="lnr lnr-chevron-down"></i></button>
+                                        </div>
+                                        
+                                        <!-- <div class="product_count">
+                                            <input type="number" min="1" max="100" value="1" class="input-text qty"
+                                                   ng-model="cart.soluong" ng-change="updateCartItemQuantity(cart)" ng-min="1" ng-max="100">
+                                        </div> -->
+                                        
+                                        <div ng-if="cart.soluong > cart.sanpham.soluong" style="color: red;">
+                                            Số lượng sản phẩm trong kho không đủ!!!
+                                        </div>
+
+                                    </td>
+                                    <td>
+                                        <h5>{{(cart.soluong * cart.giasp).toLocaleString('vi-VN')}}đ</h5>
+                                    </td>
+                                    <td>
+                                        <a href="" ng-click="removesp(cart.sanpham.masp)" class="text-muted"><i
+                                                class="fa fa-times-circle" aria-hidden="true"></i></a>
+                                    </td>
+                                </tr>
+                                <tr ng-show="!isCartEmpty" class="shipping_area">
+                                    <td>
+
+                                    </td>
+                                    <td>
+
+                                    </td>
+                                    <td>
+
+                                    </td>
+                                    <td>
+
+                                    </td>
+
+                                    <td>
+                                        <h4>Tổng tiền giỏ hàng</h4>
+                                        <div class="shipping_box">
+                                            <ul class="list">
+                                                <!-- <li>Tạm tính: {{calculateSubtotal().toLocaleString('vi-VN')}}đ</li> -->
+                                                <li> <h4>Tổng cộng: {{calculateSubtotal().toLocaleString('vi-VN')}}đ</h4></li>
+
+
+                                            </ul>
+                                        </div> 
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                <tr class="text-center" ng-show="isCartEmpty">
+                                    <td colspan="5">
+                                        Giỏ hàng đang rỗng. <a th:href="@{shop}">Tiếp tục mua sắm.</a>
+                                    </td>
+                                </tr>
+                                <tr class="out_button_area" ng-show="!isCartEmpty">
+                                    <td>
+                                        <div ng-repeat="item in items">
+                                            <input type="radio" ng-model="selectedItem" ng-value="{{item.value}}"
+                                                name="itemGroup">
+                                            {{ item.label }}
+                                        </div>
+                                    </td>
+                                    <td>
+
+                                    </td>
+                                    <td>
+
+                                    </td>
+                                    <td>
+
+                                    </td>
+                                    <td>
+
+                                    </td>
+                                    <td>
+                                        <div class="checkout_btn_inner d-flex align-items-center">
+
+                                            <a class="gray_btn" th:href="@{/shop}" >Tiếp tục mua
+                                                sắm</a>
+
+                                            <!-- Trong AngularJS template -->
+                                                <a href="#" class="primary-btn" ng-disabled="isQuantityExceeded()" ng-click="proceedToCheckout()">Tiến
+                                                    hành thanh toán</a>
+
+                                        </div>
+                                    </td>
+
+                                </tr>
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--================End Cart Area =================-->
+
+      
+    </main>
+</body>
+
+</html>

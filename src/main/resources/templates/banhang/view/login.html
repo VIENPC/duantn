@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	th:replace="~{banhang/layout/layout :: banhang(~{::title},~{::main})}">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NVA3 | Đăng nhập</title>
+</head>
+
+<body>
+	<main>
+
+
+		<!-- Start Banner Area -->
+		<section class="banner-area organic-breadcrumb">
+			<div class="container">
+				<div
+					class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+					<div class="col-first">
+						<h1>Đăng nhập/Đăng kí</h1>
+						<nav class="d-flex align-items-center">
+							<a th:href="@{/index}">Trang chủ<span class="lnr lnr-arrow-right"></span></a>
+							<a th:href="@{/auth/login/form}">Đăng nhập/Đăng kí</a>
+						</nav>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!-- End Banner Area -->
+
+		<!--================Login Box Area =================-->
+		<section class="login_box_area section_gap">
+
+			<div class="container">
+				<div class="row">
+					<div class="col-12" th:if="${message}">
+						<div class="alert alert-warning p-3 text-center slide-from-left">
+							<i class="text-danger" th:text="${message}"></i>
+						</div>
+					</div>
+					<div class="col-lg-6">
+						<div class="login_box_img">
+							<img class="img-fluid" th:src="@{/images/login.jpg}" alt="">
+							<div class="hover">
+								<h4>LẦN ĐẦU VÀO TRANG WEB?</h4>
+								<p>Hãy đăng ký tài khoản và trải nghiệm các dịch vụ mua sắm
+									tiện ích của chúng tôi!</p>
+								<a class="primary-btn" th:href="@{/auth/signup/form}">Tạo
+									Tài Khoản</a>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-6">
+
+						<div class="login_form_inner">
+							<h3>Đăng Nhập Tài Khoản</h3>
+							<form class="row login_form" th:action="@{/auth/login}"
+								method="post" id="contactForm" novalidate="novalidate">
+								<div class="col-md-12 form-group">
+									<input type="text" class="form-control" id="name"
+										name="username" placeholder="Tài khoản"
+										onfocus="this.placeholder = ''"
+										onblur="this.placeholder = 'Tài khoản'">
+								</div>
+								<div class="col-md-12 form-group">
+									<input type="password" class="form-control" name="password"
+										placeholder="Mật khẩu" onfocus="this.placeholder = ''"
+										onblur="this.placeholder = 'Mật khẩu'">
+								</div>
+								<!-- <div class="col-md-12 form-group">
+									<div class="creat_account">
+										<input type="checkbox" id="f-option2" name="remember-me">
+										<label for="f-option2">Ghi nhớ mật khẩu</label>
+									</div>
+								</div> -->
+								<div class="text-center my-2 " style="margin-left: 40%">
+									<p class="fw-bold">Hoặc</p>
+									<a href="/oauth2/authorization/google"
+										class="btn btn-danger rounded-0"> <i class="fa fa-google"></i>
+										Google
+									</a>
+									 <!-- <a href="/oauth2/authorization/facebook"
+										class="btn btn-primary rounded-0"> <i
+										class="fa fa-facebook"></i> Facebook
+									</a> -->
+								</div>
+								<div class="col-md-12 form-group">
+									<button type="submit" value="submit" class="primary-btn">Đăng
+										Nhập</button>
+									<a th:href="@{/auth/forgot-password}">Quên mật khẩu?</a>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		<!--================End Login Box Area =================-->
+
+	</main>
+</body>
+
+</html>

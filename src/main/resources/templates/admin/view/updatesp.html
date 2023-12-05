@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{admin/layout/layout :: admin(~{::title},~{::body})}">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Thêm sản phẩm mới</title>
+
+</head>
+
+<body>
+    <main class="app-content">
+        <div class="app-title">
+            <ul class="app-breadcrumb breadcrumb">
+                <li class="breadcrumb-item"><a th:href="@{/admin/qlsanpham}">Danh
+                        sách sản phẩm</a></li>
+                <li class="breadcrumb-item"><a th:href="@{/admin/addsanpham}">Cập nhật
+                        sản phẩm</a></li>
+            </ul>
+        </div>
+        <div class="row"> 
+            <div class="col-md-12">
+                <div class="tile">
+                    <h3 class="tile-title">Cập nhật sản phẩm</h3>
+                    <div class="tile-body">
+
+                        <nav>
+                            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home"
+                                    role="tab" aria-controls="nav-home" aria-selected="true">Sản phẩm</a>
+                                <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile"
+                                    role="tab" aria-controls="nav-profile" aria-selected="false">Thêm nhiều hình</a>
+
+                            </div>
+                        </nav> 
+                        <div class="tab-content" id="nav-tabContent">
+                            <div class="tab-pane fade show active" id="nav-home" role="tabpanel"
+                                aria-labelledby="nav-home-tab">
+
+                                <form class="row" th:action="@{/admin/updatesp/save}" th:object="${sp}" method="post"
+                                    enctype="multipart/form-data">
+                                    <div class="form-group  col-md-1">
+                                        <label class="control-label">Mã SP</label> <input class="form-control"
+                                            type="number" min="0" id="masp" th:field="*{masp}" disabled>
+                                            <input type="hidden" th:field="*{masp}">
+                                    </div>
+                                    <div class="form-group col-md-6">
+                                        <label class="control-label">Tên sản phẩm</label>
+                                        <input class="form-control" type="text" th:field="*{tensp}" required>
+                                        <i th:errors="*{tensp}" class="mgs_errors"></i><br>
+							
+                                    </div>
+                                    <div class="form-group  col-md-2">
+                                        <label class="control-label">Số lượng</label> <input class="form-control"
+                                            type="number" min="0" id="soluong" th:field="*{soluong}" required>
+                                        <i th:errors="*{soluong}" class="mgs_errors"></i><br> 
+                                    </div>
+                                    <div class="form-group col-md-3">
+                                        <label class="control-label">Giá bán</label> <input class="form-control"
+                                            type="number" th:field="*{giasp}" required>
+                                        <i th:errors="*{giasp}" class="mgs_errors"></i><br> 
+                                    </div>
+                                    <div class="form-group col-md-4 ">
+                                        <label for="exampleSelect1" class="control-label">Tình
+                                            trạng</label> <select class="form-control" id="tinhtrangselect"
+                                            th:field="*{trangthaisp}">
+                                            <option value="">-- Chọn tình trạng --</option>
+
+                                            <option value="true">Còn hàng</option>
+                                            <option value="false">Hết hàng</option>
+                                        </select>
+										<i th:errors="*{trangthaisp}" class="mgs_errors"></i><br>
+
+                                    </div>
+                                     <div class="form-group col-md-4 ">
+                                        <label for="exampleSelect1" class="control-label">Thương hiệu</label>
+                                        <select class="form-control" id="" name="thuonghieu">
+                                           
+
+                                            <option th:each="th : ${listth}" th:text="${th.tenthuonghieu}"
+                                                th:value="${th.id}"  th:selected="(${th.id} == *{thuonghieu.id})" >
+                                            </option>
+                                        </select>
+
+                                    </div>
+                                    <div class="form-group col-md-4 ">
+										<label for="" class="control-label">Loại
+										</label> <select class="form-control" id="" name="nhomsanpham">
+										
+											<option th:each="dm : ${listdm}" th:text="${dm.tennhom}" th:value="${dm.manhom}" th:selected="(${dm.manhom} == *{nhomsanpham.manhom})"></option>
+
+											
+										</select>
+
+									</div>
+
+
+                                    <div class="form-group col-md-12">
+                                        <div id="imageFrame" class="image-frame">
+                                            <img id="selectedImage" class="selected-image" src="" alt="Selected Image">
+                                        </div>
+										<label class="control-label">Ảnh sản phẩm</label><br> <input  id="validatedCustomFile" type="file"
+											name="hinh_sp">
+
+										<!-- <i th:text="${message_img}" class="mgs_errors"></i><br> -->
+                                            
+
+									</div>
+                                    <div class="form-group col-md-12">
+										<label class="control-label">Thông tin sản phẩm</label>
+										<textarea class="form-control" name="thongtin" id="thongtin" th:field="*{thongtin}" required></textarea>
+										<script>
+											CKEDITOR.replace('thongtin');
+										</script>
+										<i th:errors="*{thongtin}" class="mgs_errors"></i><br>
+
+									</div> 
+
+                                    <div class="form-group col-md-12">
+										<label class="control-label">Thông tin số kỹ thuật</label>
+										<textarea class="form-control" name="thongso" id="thongso" th:field="*{thongsokythuat}" required></textarea>
+										<script>
+											CKEDITOR.replace('thongso');
+										</script>
+										<i th:errors="*{thongsokythuat}" class="mgs_errors"></i><br>
+
+									</div>
+                                    <button class="btn btn-save ml-3">Lưu lại</button>
+                                    <a class="btn btn-cancel ml-3">Reset</a>
+                                </form>
+
+
+
+                            </div>
+                            <div class="tab-pane fade" id="nav-profile" role="tabpanel"
+								aria-labelledby="nav-profile-tab">
+								<form th:action="@{/admin/upload}" class="row" enctype="multipart/form-data" method="post">
+									<div class="form-group col-5 ">
+										<label for="" class="control-label">Tên sản phẩm
+										</label> <br>
+										<input type="hidden" id="selectedProductId" name="selectedProductId" />
+
+										<select class="form-control js-example-basic-single" name="productId">
+											<option value="">-- Chọn sản phẩm --</option>
+											<option th:each="sp : ${listsp}" th:text="${sp.tensp}" th:value="${sp.masp}">
+											</option>
+										</select>
+
+									</div>
+
+									<div class="form-group col-5">
+										<label for="" class="control-label">Chọn Hình:
+										</label>
+										<input class="form-control" type="file" name="files" multiple="multiple" />
+									</div>
+
+
+									<div class="form-group col-2" style="margin-top: 40px;"><button type="submit" class="btn btn-primary "
+											> Upload hình ảnh</button></div>
+
+
+
+								</form>
+								<div id="image-preview"></div>
+							</div>
+
+                        </div>
+
+
+
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,19 @@
+.table {
+    width: 100%;
+}
+
+/* Media query for smaller screens (e.g., tablets) */
+@media (max-width: 768px) {
+    .table {
+        font-size: 14px;
+    }
+}
+
+/* Media query for even smaller screens (e.g., mobile devices) */
+@media (max-width: 480px) {
+    .table {
+        font-size: 12px;
+    }
+
+    /* You can further adjust the layout and styles for mobile devices */
+}

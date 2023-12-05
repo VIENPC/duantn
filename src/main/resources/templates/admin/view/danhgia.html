@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{admin/layout/layout :: admin(~{::title},~{::body})}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản lí | Đánh giá</title>
+</head>
+
+<body>
+    <main class="app-content">
+        <div class="app-title">
+            <ul class="app-breadcrumb breadcrumb side">
+                <li class="breadcrumb-item active"><a th:href="@{/admin/qldanhmuc}"><b>
+                            Đánh giá </b></a></li>
+            </ul>
+            <div id="clock"></div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="tile">
+                    <div class="tile-body">
+                        <div class="row element-button">
+
+
+
+                            <div class="col-sm-2">
+                                <a class="btn btn-delete btn-sm print-file" type="button" title="In"
+                                    onclick="myApp.printTable()"><i class="fa fa-print"></i> In dữ liệu</a>
+                            </div>
+
+
+                            <div class="col-sm-2">
+
+                                <a class="btn btn-excel btn-sm export" title="=Xuất file excel"><i
+                                        class="fa fa-file-excel-o"></i>
+                                    Xuất Excel</a>
+                            </div>
+                            <div class="col-sm-2">
+                                <a class="btn btn-delete btn-sm pdf-file" type="button" title="Xuất file fpf"><i
+                                        class="fa fa-file-pdf-o"></i> Xuất PDF</a>
+                            </div>
+                            
+                        </div>
+                        <div id="sampleTable_wrapper"
+                            class="dataTables_wrapper container-fluid dt-bootstrap4 no-footer">
+
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <table class="table table-hover table-bordered" id="sampleTable">
+                                        <thead>
+                                          
+                                            <tr>
+
+                                                <th width="100px"><span>Hình ảnh</span></th>
+                                                <th>Tên sản phẩm</th>
+                                                <th width="120px"><span>Tổng số đánh giá</span></th>
+                                                <th width="50px"><span>5 sao</span></th>
+                                                <th width="50px"><span>4 sao</span></th>
+                                                <th width="50px"><span>3 sao</span></th>
+                                                <th width="50px"><span>2 sao</span></th>
+                                                <th width="50px"><span>1 sao</span></th>
+
+                                                <th width="80px"><span>Chức năng</span></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            <tr th:each="result : ${results}">
+                                                <td> 
+                                                    <img th:src="@{'/images/sanpham/' + ${result[2]}}" alt=""
+                                                        width="80px" />
+                                                </td>
+                                                <td th:text="${result[1]}"></td>
+                                                <td th:text="${result[3]}"></td>
+                                                <td th:text="${result[4]}"></td>
+                                                <td th:text="${result[5]}"></td>
+                                                <td th:text="${result[6]}"></td>
+                                                <td th:text="${result[7]}"></td>
+                                                <td th:text="${result[8]}"></td>
+                                                <td><a class="btn btn-primary btn-sm " type="button"
+                                                        title="Xem chi tiết"
+                                                        th:href="@{'/admin/xemctdanhgia/'+${result[0]}}">
+                                                        <i class="fa fa-eye" aria-hidden="true"></i></i>
+                                                    </a>
+                                                </td> 
+                                            </tr>
+
+
+
+                                        </tbody>
+                                    </table>
+                                    <table class="table table-hover table-bordered" id="table">
+                                        <thead>
+                                            <tr>
+												<th colspan="8"
+													style="text-align: center; font-size: 25px; font-weight: bold ;">
+													DANH SÁCH ĐÁNH GIÁ</th>
+											</tr>
+                                            <tr>
+
+                                                <th width="100px"><span>Hình ảnh</span></th>
+                                                <th>Tên sản phẩm</th>
+                                                <th width="120px"><span>Tổng số đánh giá</span></th>
+                                                <th width="50px"><span>5 sao</span></th>
+                                                <th width="50px"><span>4 sao</span></th>
+                                                <th width="50px"><span>3 sao</span></th>
+                                                <th width="50px"><span>2 sao</span></th>
+                                                <th width="50px"><span>1 sao</span></th>
+
+                                               
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+
+                                            <tr th:each="result : ${results}">
+                                                <td> 
+                                                    <img th:src="@{'/images/sanpham/' + ${result[2]}}" alt=""
+                                                        width="80px" />
+                                                </td>
+                                                <td th:text="${result[1]}"></td>
+                                                <td th:text="${result[3]}"></td>
+                                                <td th:text="${result[4]}"></td>
+                                                <td th:text="${result[5]}"></td>
+                                                <td th:text="${result[6]}"></td>
+                                                <td th:text="${result[7]}"></td>
+                                                <td th:text="${result[8]}"></td>
+                                              
+                                            </tr>
+
+
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</body>
+
+</html>

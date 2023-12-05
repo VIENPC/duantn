@@ -1,0 +1,817 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{banhang/layout/layout :: banhang(~{::title},~{::main})}">
+
+<head>
+    <title> NVA3| Tài khoản</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <style>
+
+
+    </style>
+
+
+
+
+</head>
+
+<body>
+
+    <main ng-controller="accountctrl">
+        <!-- Start Banner Area -->
+        <section class="banner-area organic-breadcrumb">
+            <div class="container">
+                <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+                    <div class="col-first">
+                        <h1>Trang tài khoản</h1>
+                        <nav class="d-flex align-items-center">
+                            <a th:href="@{/index}">Trang chủ<span class="lnr lnr-arrow-right"></span></a>
+                            <a th:href="@{/account}">Tài khoản</a>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- End Banner Area -->
+        <section class="mt-3">
+            <div class="container">
+                <div class="grid wide">
+                    <div class="row sm-gutter">
+                        <div class="col l-4 m-0 c-0" style="height: 500px;">
+                            <div class="text-center">
+
+                                <div class="dropdown custom-dropdown">
+                                    <div href="#user" data-toggle="collapse" aria-expanded="false"
+                                        class="dropdown-toggle" style=" cursor: pointer;">
+                                        <i class="fa fa-user"></i>
+                                        <span>Tài khoản của tôi</span>
+                                    </div>
+                                    <ul id="user" class="collapse list-unstyled">
+                                        <li class="list-group" id="list-tab" role="tablist">
+
+                                            <a href="" class="nav-link text-dark font-bold btn-large mt-1 mb-1"
+                                                id="list-profile-list" data-toggle="list" data-target="#list-profile"
+                                                role="tab" aria-controls="profile">Hồ
+                                                sơ</a>
+                                            <a href="" class="nav-link text-dark font-bold btn-large mt-1 mb-1"
+                                                id="diachi-list" data-toggle="list" data-target="#diachi" role="tab"
+                                                aria-controls="oder">Địa chỉ</a>
+                                           
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="list-group" role="donmualist">
+ 
+                                    <a href="" class="nav-link text-dark font-bold btn-large mt-1 mb-1" id="donmua-list"
+                                        data-toggle="list" data-target="#list-donmua" role="tab"
+                                        aria-controls="profile"><i class="fa fa-shopping-cart"></i>&ensp;Đơn mua</a>
+                                </div>
+                             
+                            </div>
+
+                        </div>
+
+                        <div class="col-10">
+                            <div class="tab-content " id="nav-tabContent">
+                                <!-- Account -->
+                                <div class="tab-pane mb-4 active" id="list-profile" role="tabpanel"
+                                    aria-labelledby="list-profile-list">
+                                    <form name="Formupdate">
+                                        <div class="row">
+                                            <div class="col-xl-8">
+                                                <div class="card-header">Hồ sơ của tôi</div>
+                                                <div class="card-body">
+                                                    <form ng-init="getAccountByUsername()">
+                                                        <div class="form-group">
+                                                            <label for="">Tên đăng nhập:</label> <label for=""><b
+                                                                    id="usernamekh">{{account.usernamekh}}</b></label>
+                                                        </div>
+                                                        <!-- Form Group (Full Name) -->
+                                                        <div class="form-group">
+                                                            <label for="inputFullName">Họ và tên</label> <input
+                                                                type="text" class="form-control" id="inputFullName"
+                                                                placeholder="Enter your full name"
+                                                                ng-model="account.hotenkh"> <i
+                                                                ng-show="form.fullname && form.fullname.length > 50"
+                                                                style="color: red;">Tên người dùng không quá 50 ký
+                                                                tự</i>
+                                                        </div>
+
+                                                        <!-- Form Group (Email Address) -->
+                                                        <div class="form-group">
+                                                            <label for="inputEmail">Email </label> <input type="email"
+                                                                class="form-control" id="inputEmail"
+                                                                placeholder="Enter your email address"
+                                                                ng-model="account.email" ng-readonly="email !== null">
+                                                        </div>
+
+                                                        <!-- Form Group (Gender) as radio buttons -->
+                                                        <div class="form-group">
+                                                            <label class="d-block">Giới tính</label>
+                                                            <div class="form-check form-check-inline">
+                                                                <input class="form-check-input" type="radio"
+                                                                    name="gender" id="genderNam" value="true" ng-model="account.gioitinh"
+                                                                    ng-checked="account.gioitinh === true"> <label
+                                                                    class="form-check-label" for="genderNam">Nam</label>
+                                                            </div>
+                                                            <div class="form-check form-check-inline">
+                                                                <input class="form-check-input" type="radio"
+                                                                    name="gender" id="genderNu" ng-model="account.gioitinh" 
+                                                                    ng-checked="account.gioitinh === false"
+                                                                    value="false">
+                                                                <label class="form-check-label"
+                                                                    for="genderNu">Nữ</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Form Group (Phone Number and Birthday) -->
+                                                        <div class="form-row">
+                                                            <div class="form-group col-md-6">
+                                                                <label for="inputPhone">Số điện thoại</label> <input
+                                                                    type="tel" class="form-control" id="inputPhone"
+                                                                    placeholder="Enter your phone number"
+                                                                    ng-model="account.dienthoai"  pattern="^(0[2-9])(\d{8})$"><i
+                                                                    ng-show="form.phone && form.phone.length !== 10"
+                                                                    style="color: red;">Số điện thoại phải có 10 ký 
+                                                                    tự</i>
+                                                            </div>
+                                                            <div class="form-group col-md-6">
+                                                                <label for="inputBirthday">Địa chỉ</label> <input
+                                                                    type="text" class="form-control" id="inputBirthday"
+                                                                    name="address" ng-model="account.diachi">
+                                                            </div>
+                                                        </div>
+
+                                                        <!-- Save Changes Button -->
+                                                        <button type="button" class="btn btn-primary"
+                                                            ng-click="updateAccount()">Lưu</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-4">
+                                                <!-- Profile picture card-->
+                                                <div class="card mb-4 mb-xl-0">
+                                                    <div class="card-header">Thông tin</div>
+                                                    <div class="card-body text-center">
+                                                        <!-- Profile picture image-->
+                                                        <img class="img-account-profile rounded-circle mb-2"
+                                                            src="http://bootdey.com/img/Content/avatar/avatar1.png"
+                                                            alt="" width="100%">
+                                                        <!-- Profile picture help block-->
+                                                        <!-- <div class="small font-italic text-muted mb-4">JPG or PNG no
+                                                            larger than 5 MB</div> -->
+                                                        <!-- Profile picture upload button-->
+                                                        <!-- <button class="btn btn-primary" type="button">Upload new
+                                                            image</button> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </form>
+                                </div>
+                                <!-- Đơn mua -->
+                                <div class="tab-pane fade  " id="list-donmua" role="tabpanel"
+                                    aria-labelledby="donmua-list">
+
+                                    <div class="card mb-4">
+                                        <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                            <li class="nav-item" role="presentation">
+                                                <a href="javascript:;" class="nav-link active" id="choxacnhan-tab"
+                                                    data-toggle="tab" role="tab" data-target="#choxacnhan-pane"
+                                                    aria-controls="choxacnhan-pane" aria-selected="true"
+                                                    ng-click="getHdId(1)">Chờ xác nhận</a>
+                                            </li>
+                                            <li class="nav-item" role="presentation">
+                                                <a href="javascript:;" class="nav-link" id="daxacnhan-tab"
+                                                    data-toggle="tab" data-target="#daxacnhan-pane" role="tab"
+                                                    aria-controls="daxacnhan-pane" aria-selected="false"
+                                                    ng-click="getHdId(2)">Đã xác nhận</a>
+                                            </li>
+                                            <li class="nav-item" role="presentation">
+                                                <a href="javascript:;" class="nav-link" id="danggiao-tab"
+                                                    data-toggle="tab" data-target="#danggiao-pane" role="tab"
+                                                    aria-controls="danggiao-pane" aria-selected="false"
+                                                    ng-click="getHdId(3)">Đang giao</a>
+                                            </li>
+                                            <li class="nav-item" role="presentation">
+                                                <a href="javascript:;" class="nav-link" id="hoanthanh-tab"
+                                                    data-toggle="tab" data-target="#hoanthanh-pane" role="tab"
+                                                    aria-controls="hoanthanh-pane" aria-selected="false"
+                                                    ng-click="getHdId(4)">Hoàn thành</a>
+                                            </li>
+                                            <li class="nav-item" role="presentation">
+                                                <a href="javascript:;" class="nav-link" id="dahuy-tab" data-toggle="tab"
+                                                    data-target="#dahuy-pane" role="tab" aria-controls="dahuy-pane"
+                                                    aria-selected="false" ng-click="getHdId(5)">Đã
+                                                    hủy</a>
+                                            </li>
+                                        </ul>
+                                        <div class="tab-content" id="myTabContent">
+                                            <div class="tab-pane fade show active" id="choxacnhan-pane" role="tabpanel"
+                                                aria-labelledby="choxacnhan-tab">
+                                                <div class="card" style="height: 400px;" ng-show="hoadons.length === 0">
+                                                    <!-- Nội dung của thẻ card khi hoadons rỗng -->
+                                                    <div
+                                                        style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%;">
+                                                        <img src="/images/order.png" alt=""
+                                                            style="margin-bottom: 10px;">
+                                                        <p>Chưa có đơn hàng</p>
+                                                    </div>
+                                                </div>
+                                                <div class="card" ng-repeat="hd in hoadons">
+                                                    <div class="card-header"
+                                                        style="display: flex; align-items: center;">
+                                                        <div style="flex: 1; font-size: 15px; font-weight: bold;">
+                                                            Mã đơn hàng: #{{hd.mahd}}
+                                                        </div>
+                                                        <div>
+                                                            <span class="badge badge-info" style="font-size: 15px;">Chờ
+                                                                xác nhận</span>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div ng-repeat="hdct in hoadonct[$index] "
+                                                            style="display: flex; align-items: center; margin-bottom: 10px;">
+                                                            <img ng-src="/images/sanpham/{{hdct.sanpham.hinhanh}}"
+                                                                width="100px" style="cursor: pointer" ng-click="goToSinglePage(hdct.sanpham.masp)">
+                                                            <div
+                                                                style="display: flex; align-items: center; margin-left: 10px; flex: 1; font-size: 18px;">
+                                                                <span>{{hdct.sanpham.tensp}} X
+                                                                    <strong>{{hdct.soluong}}</strong></span>
+                                                            </div>
+                                                            <div
+                                                                style="display: flex; justify-content: space-between; font-size: 18px; color: coral;">
+                                                                <span>{{(hdct.sanpham.giasp* hdct.soluong).toLocaleString('vi-VN')}}đ</span>
+
+                                                            </div> 
+                                                        </div>
+                                                        
+
+                                                        <div style="font-size: 18px; font-weight: bold;float: right">
+                                                            Tiền ship: {{hd.tienvc.toLocaleString('vi-VN')}}đ <br>
+                                                          
+                                                            Thành tiền: <strike style="font-size: 12px;">{{ calculateTotalAmount(hoadonct[$index]) }}đ</strike>{{hd.tongtien.toLocaleString('vi-VN')}}đ</div>
+                                                    </div>
+                                                    <div class="card-footer">
+                                                        Ngày đặt: {{hd.ngaymua | date: 'dd/MM/yyyy'}}
+                                                        <a href="javascript:;" ng-click="huydon(hd.mahd)"
+                                                            class="btn btn-danger" style="float: right;">Hủy đơn
+                                                            hàng</a>
+                                                    </div>
+
+                                                </div>
+
+
+
+
+                                            </div>
+                                            <div class="tab-pane fade" id="daxacnhan-pane" role="tabpanel"
+                                                 aria-labelledby="daxacnhan-tab">
+                                                <div class="card" style="height: 400px;" ng-show="hoadons.length === 0">
+                                                    <!-- Nội dung của thẻ card khi hoadons rỗng -->
+                                                    <div
+                                                        style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%;">
+                                                        <img src="/images/order.png" alt=""
+                                                            style="margin-bottom: 10px;" > 
+                                                        <p>Chưa có đơn hàng</p>
+                                                    </div>
+                                                </div>
+
+
+                                                <div class="card" ng-repeat="hd in hoadons">
+                                                    <div class="card-header"
+                                                        style="display: flex; align-items: center;">
+                                                        <div style="flex: 1; font-size: 15px; font-weight: bold;">
+                                                            Mã đơn hàng: #{{hd.mahd}}
+                                                        </div>
+                                                        <div>
+                                                            <span class="badge badge-warning"
+                                                                style="font-size: 15px;">Đã xác nhận</span>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div ng-repeat="hdct in hoadonct[$index]"
+                                                            style="display: flex; align-items: center; margin-bottom: 10px;">
+                                                            <img ng-src="/images/sanpham/{{hdct.sanpham.hinhanh}}"
+                                                                width="100px" style="cursor: pointer" ng-click="goToSinglePage(hdct.sanpham.masp)">
+                                                            <div
+                                                                style="display: flex; align-items: center; margin-left: 10px; flex: 1; font-size: 18px;">
+                                                                <span>{{hdct.sanpham.tensp}} X {{hdct.soluong}}</span>
+                                                            </div>
+                                                            <div
+                                                                style="display: flex; justify-content: space-between; font-size: 18px; color: coral;">
+
+                                                                <span>{{hdct.sanpham.giasp.toLocaleString('vi-VN')}}</span>
+                                                                <span>đ</span>
+                                                            </div>
+                                                        </div>
+                                                        <div style="font-size: 18px; font-weight: bold;float: right">
+                                                            Tiền ship: {{hd.tienvc.toLocaleString('vi-VN')}}đ <br>
+                                                          
+                                                            Thành tiền: <strike style="font-size: 12px;">{{ calculateTotalAmount(hoadonct[$index]) }}đ</strike>{{hd.tongtien.toLocaleString('vi-VN')}}đ</div>
+                                                    </div>
+                                                    <div class="card-footer">
+                                                        Ngày đặt: {{hd.ngaymua | date: 'dd/MM/yyyy'}}
+                                                        <!-- <a href="javascript:;" ng-click="huydon(hd.mahd)"class="btn btn-danger" style="float: right;">Hủy đơn hàng</a> -->
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="danggiao-pane" role="tabpanel"
+                                                aria-labelledby="danggiao-tab">
+                                                <div class="card" style="height: 400px;" ng-show="hoadons.length === 0">
+                                                    <!-- Nội dung của thẻ card khi hoadons rỗng -->
+                                                    <div
+                                                        style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%;">
+                                                        <img src="/images/order.png" alt=""
+                                                            style="margin-bottom: 10px;">
+                                                        <p>Chưa có đơn hàng</p>
+                                                    </div>
+                                                </div>
+                                                <div class="card" ng-repeat="hd in hoadons">
+                                                    <div class="card-header"
+                                                        style="display: flex; align-items: center;">
+                                                        <div style="flex: 1; font-size: 15px; font-weight: bold;">
+                                                            Mã đơn hàng: #{{hd.mahd}}
+                                                        </div>
+                                                        <div>
+                                                            <span class="badge badge-primary"
+                                                                style="font-size: 15px;">Đang giao</span>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div ng-repeat="hdct in hoadonct[$index] "
+                                                            style="display: flex; align-items: center; margin-bottom: 10px;">
+                                                            <img ng-src="/images/sanpham/{{hdct.sanpham.hinhanh}}"
+                                                                width="100px" style="cursor: pointer" ng-click="goToSinglePage(hdct.sanpham.masp)">
+                                                            <div
+                                                                style="display: flex; align-items: center; margin-left: 10px; flex: 1; font-size: 18px;">
+                                                                <span>{{hdct.sanpham.tensp}} X {{hdct.soluong}}</span>
+                                                            </div>
+                                                            <div
+                                                                style="display: flex; justify-content: space-between; font-size: 18px; color: coral;">
+                                                                <span>{{hdct.sanpham.giasp.toLocaleString('vi-VN')}}</span>
+                                                                <span>đ</span>
+                                                            </div>
+                                                        </div>
+                                                        <div style="font-size: 18px; font-weight: bold;float: right">
+                                                            Tiền ship: {{hd.tienvc.toLocaleString('vi-VN')}}đ <br>
+                                                          
+                                                            Thành tiền: <strike style="font-size: 12px;">{{ calculateTotalAmount(hoadonct[$index]) }}đ</strike>{{hd.tongtien.toLocaleString('vi-VN')}}đ</div>
+                                                    </div>
+                                                    <div class="card-footer">
+                                                        Ngày đặt: {{hd.ngaymua | date: 'dd/MM/yyyy'}}
+                                                        <!-- <a href="javascript:;" ng-click="huydon(hd.mahd)"class="btn btn-danger" style="float: right;">Hủy đơn hàng</a> -->
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="hoanthanh-pane" role="tabpanel"
+                                                aria-labelledby="hoanthanh-tab">
+                                                <div class="card" style="height: 400px;" ng-show="hoadons.length === 0">
+                                                    <!-- Nội dung của thẻ card khi hoadons rỗng -->
+                                                    <div
+                                                        style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%;">
+                                                        <img src="/images/order.png" alt=""
+                                                            style="margin-bottom: 10px;" >
+                                                        <p>Chưa có đơn hàng</p>
+                                                    </div>
+                                                </div>
+                                                <div class="card" ng-repeat="hd in hoadons">
+                                                    <div class="card-header"
+                                                        style="display: flex; align-items: center;">
+                                                        <div style="flex: 1; font-size: 15px; font-weight: bold;">
+                                                            Mã đơn hàng: #{{hd.mahd}}
+                                                        </div>
+                                                        <div>
+                                                            <span class="badge badge-success"
+                                                                style="font-size: 15px;">Hoàn thành</span>
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div ng-repeat="hdct in hoadonct[$index] "
+                                                            style="display: flex; align-items: center; margin-bottom: 10px;">
+                                                            <img ng-src="/images/sanpham/{{hdct.sanpham.hinhanh}}"
+                                                                width="100px" style="cursor: pointer" ng-click="goToSinglePage(hdct.sanpham.masp)">
+                                                            <div
+                                                                style="display: flex; align-items: center; margin-left: 10px; flex: 1; font-size: 18px;">
+                                                                <span>{{hdct.sanpham.tensp}} X {{hdct.soluong}}</span>
+                                                            </div>
+                                                            <div
+                                                                style="display: flex; justify-content: space-between; font-size: 18px; color: coral;">
+                                                                <span>{{hdct.sanpham.giasp.toLocaleString('vi-VN')}}</span>
+                                                                <span>đ</span>
+                                                            </div>
+                                                        </div>
+
+                                                        <div style="font-size: 18px; font-weight: bold;float: right">
+                                                            Tiền ship: {{hd.tienvc.toLocaleString('vi-VN')}}đ <br>
+                                                          
+                                                            Thành tiền: <strike style="font-size: 12px;">{{ calculateTotalAmount(hoadonct[$index]) }}đ</strike>{{hd.tongtien.toLocaleString('vi-VN')}}đ</div>
+                                                    </div>
+                                                    <div class="card-footer">
+                                                        Ngày đặt: {{hd.ngaymua | date: 'dd/MM/yyyy'}}
+                                                        <!-- <a href="javascript:;" ng-click="huydon(hd.mahd)"class="btn btn-danger" style="float: right;">Hủy đơn hàng</a> -->
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="dahuy-pane" role="tabpanel"
+                                                aria-labelledby="dahuy-tab">
+                                                <div class="card" style="height: 400px;" ng-show="hoadons.length === 0">
+                                                    <!-- Nội dung của thẻ card khi hoadons rỗng -->
+                                                    <div
+                                                        style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100%;">
+                                                        <img src="/images/order.png" alt=""
+                                                            style="margin-bottom: 10px;">
+                                                        <p>Chưa có đơn hàng</p>
+                                                    </div>
+                                                </div>
+                                                <div class="card" ng-repeat="hd in hoadons">
+                                                    <div class="card-header"
+                                                        style="display: flex; align-items: center;">
+                                                        <div style="flex: 1; font-size: 15px; font-weight: bold;">
+                                                            Mã đơn hàng: #{{hd.mahd}}
+                                                        </div>
+                                                        <div>
+                                                            <span class="badge badge-danger" style="font-size: 15px;">Đã
+                                                                hủy</span>
+                                                        </div>
+ 
+                                                    </div>
+                                                    <div class="card-body">
+                                                        <div ng-repeat="hdct in hoadonct[$index] "
+                                                            style="display: flex; align-items: center; margin-bottom: 10px;">
+                                                            <img ng-src="/images/sanpham/{{hdct.sanpham.hinhanh}}"
+                                                                width="100px" style="cursor: pointer" ng-click="goToSinglePage(hdct.sanpham.masp)">
+                                                            <div
+                                                                style="display: flex; align-items: center; margin-left: 10px; flex: 1; font-size: 18px;">
+                                                                <span>{{hdct.sanpham.tensp}} X {{hdct.soluong}}</span>
+                                                            </div>
+                                                            <div
+                                                                style="display: flex; justify-content: space-between; font-size: 18px; color: coral;">
+                                                                <span>{{hdct.sanpham.giasp.toLocaleString('vi-VN')}}</span>
+                                                                <span>đ</span>
+                                                            </div>
+                                                        </div>
+                                                        <div style="font-size: 18px; font-weight: bold;float: right">
+                                                            Tiền ship: {{hd.tienvc.toLocaleString('vi-VN')}}đ <br>
+                                                          
+                                                            Thành tiền: <strike style="font-size: 12px;">{{ calculateTotalAmount(hoadonct[$index]) }}đ</strike>{{hd.tongtien.toLocaleString('vi-VN')}}đ</div>
+                                                    </div>
+                                                    <div class="card-footer">
+                                                        Ngày đặt: {{hd.ngaymua | date: 'dd/MM/yyyy'}}
+                                                        <!-- <a href="javascript:;" ng-click="huydon(hd.mahd)"class="btn btn-danger" style="float: right;">Hủy đơn hàng</a> -->
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+                               
+                                <!-- Địa chỉ -->
+                                <div class="tab-pane fade" id="diachi" role="tabpanel" aria-labelledby="diachi-list">
+                                    <div class="card-header"
+                                        style="display: flex; justify-content: space-between; align-items: center;">
+                                        <span>Địa chỉ</span>
+                                        <button type="button" class="btn btn-primary" data-toggle="modal"
+                                            data-target="#exampleModalCenter">
+                                            Thêm địa chỉ mới
+                                        </button>
+                                        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+                                            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                                <div class="modal-content" style="width: 800px;">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLongTitle">Địa chỉ</h5>
+                                                        <butt on type="button" class="close" data-dismiss="modal"
+                                                            aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </butt>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <form ng-submit="adddiachi()">
+                                                            <!-- Form Group (Full Name) -->
+
+                                                            <div class="form-row">
+                                                                <div class="form-group col-md-6">
+                                                                    <label for="fullname">Họ và tên</label>
+                                                                    <input type="text" class="form-control"
+                                                                        id="fullname" placeholder="Nhập họ tên" value=""
+                                                                        ng-model="account.hotenkh" required>
+
+                                                                </div>
+                                                                <div class="form-group col-md-6">
+                                                                    <label for="sodienthoai">Số điện thoại</label>
+                                                                    <input type="tel" class="form-control"
+                                                                        pattern="^(0[2-9])(\d{8})$" id="sodienthoai"
+                                                                        placeholder="Số điện thoại"
+                                                                        ng-model="account.dienthoai" name="sdt"
+                                                                        required>
+
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- Form Group (Address) -->
+                                                            <div class="form-group">
+                                                                <label for="Addressdetail">Địa chỉ</label>
+                                                                <input type="text" class="form-control"
+                                                                    data-toggle="collapse" href="#collapseExample"
+                                                                    aria-expanded="false"
+                                                                    aria-controls="collapseExample" ng-model="result"
+                                                                    id="result" required>
+
+                                                                <div class="collapse" id="collapseExample">
+                                                                    <div class="card card-body">
+                                                                        <div class="nav nav-tabs" id="diachi"
+                                                                            role="tablist">
+
+                                                                            <div class="row">
+                                                                                <nav>
+                                                                                    <div class="nav nav-tabs"
+                                                                                        id="nav-tab" role="tablist">
+                                                                                        <li class="nav-item nav-link active"
+                                                                                            id="nav-tinh-tab"
+                                                                                            data-toggle="tab"
+                                                                                            href="#nav-tinh" role="tab"
+                                                                                            aria-controls="nav-tinh"
+                                                                                            aria-selected="true">
+                                                                                            Tỉnh/Thành phố
+                                                                                        </li>
+                                                                                        <li class="nav-item nav-link"
+                                                                                            id="nav-huyen-tab"
+                                                                                            data-toggle="tab"
+                                                                                            href="#nav-huyen" role="tab"
+                                                                                            aria-controls="nav-huyen"
+                                                                                            aria-selected="false"
+                                                                                            style="margin-left: 50px;">
+                                                                                            Quận/Huyện</li>
+                                                                                        <li class="nav-item nav-link"
+                                                                                            id="nav-xa-tab"
+                                                                                            data-toggle="tab"
+                                                                                            href="#nav-xa" role="tab"
+                                                                                            aria-controls="nav-xa"
+                                                                                            aria-selected="false"
+                                                                                            style="margin-left: 50px;">
+                                                                                            Phường/Xã
+                                                                                        </li>
+                                                                                    </div>
+                                                                                </nav>
+                                                                            </div>
+
+                                                                        </div>
+                                                                        <div class="tab-content" id="nav-tabContent">
+                                                                            <div class="tab-pane fade show active"
+                                                                                id="nav-tinh" role="tabpanel"
+                                                                                aria-labelledby="nav-tinh-tab">
+                                                                                <div class="input-group mb-6">
+                                                                                    <select class="custom-select"
+                                                                                        ng-model="selectedProvince"
+                                                                                        ng-options="item.ProvinceName for item in provinces"
+                                                                                        ng-change="onProvince()">
+                                                                                        <option selected value="">Chọn
+                                                                                            tỉnh thành
+                                                                                            phố</option>
+                                                                                    </select>
+
+
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="tab-pane fade" id="nav-huyen"
+                                                                                role="tabpanel"
+                                                                                aria-labelledby="nav-huyen-tab">
+                                                                                <div class="input-group mb-6">
+                                                                                    <select class="custom-select"
+                                                                                        ng-model="selectedDistrict"
+                                                                                        ng-options="it.DistrictName for it in districts"
+                                                                                        ng-change="onDistrict()">
+                                                                                        <option selected value="">Chọn
+                                                                                            quận huyện
+                                                                                        </option>
+                                                                                    </select>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="tab-pane fade" id="nav-xa"
+                                                                                role="tabpanel"
+                                                                                aria-labelledby="nav-xa-tab">
+                                                                                <div class="input-group mb-6">
+                                                                                    <select class="custom-select"
+                                                                                        ng-model="selectedWard"
+                                                                                        ng-options="it.WardName for it in communes"
+                                                                                        ng-change="onWard()">
+                                                                                        <option selected value="">Chọn
+                                                                                            xã phường
+                                                                                        </option>
+                                                                                    </select>
+
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+
+                                                            <!-- Form Group (Address detail) -->
+                                                            <div class="form-group">
+                                                                <label for="Addressdetail">Địa chỉ cụ thể</label><input
+                                                                    type="text" class="form-control" id="Addressdetail"
+                                                                    placeholder="Địa chỉ cụ thể" ng-model="diachict"
+                                                                    required>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary"
+                                                                    data-dismiss="modal">Hủy</button>
+                                                                <button type="submit" class="btn btn-primary">Thêm
+                                                                </button>
+                                                            </div>
+
+                                                        </form>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+
+
+                                    <table class="table">
+
+                                        <tbody>
+                                            <tr ng-repeat="dc in diachis">
+
+                                                <td width="750px">
+                                                    <p class="font-weight-bold">{{dc.tennn}} | {{dc.sdtnn}}</p>
+                                                    <p>{{dc.diachi}}</p>
+                                                    <span ng-if="dc.trangthai == true" class="badge badge-danger"
+                                                        style="font-size: 15px;"> Mặc định</span>
+
+                                                </td>
+                                                <td>
+                                                    <a href="javascript:;" class="mr-3" ng-click="getdc(dc.id)">Cập nhật
+                                                    </a>
+                                                    <a href="" ng-click="removeadc(dc.id)">Xóa</a>
+                                                    <button type="button" class="btn btn-outline-secondary"
+                                                        ng-disabled="dc.trangthai" ng-click="updatett(dc.id)">Thiết lập
+                                                        mặc định</button>
+
+                                                </td>
+
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+
+                                </div>
+                                 
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            </div>
+        </section>
+        <!-- Modal -->
+
+
+        <div class="modal fade" id="modaledit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLongTitle">Cập nhật địa chỉ</h5>
+
+                    </div>
+                    <div class="modal-body">
+                        <form ng-submit="capnhatdc(diachiupdate.id)">
+                            <!-- Form Group (Full Name) -->
+
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="fullname">Họ và tên</label>
+                                    <input type="text" class="form-control" id="name" placeholder="Nhập họ tên" value=""
+                                        ng-model="diachiupdate.tennn" required>
+
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="sdt">Số điện thoại</label>
+                                    <input type="tel" class="form-control" pattern="^(0[2-9])(\d{8})$" id="sdt"
+                                        placeholder="Số điện thoại" ng-model="diachiupdate.sdtnn" name="sdt" required>
+
+                                </div>
+                            </div>
+
+                            <!-- Form Group (Address) -->
+                            <div class="form-group">
+                                <label for="Addressdetail">Địa chỉ</label>
+                                <input type="text" class="form-control" data-toggle="collapse" href="#collapseExample"
+                                    aria-expanded="false" aria-controls="collapseExample" ng-model="diacct" id="ketqua"
+                                    required>
+
+                                <div class="collapse" id="collapseExample">
+                                    <div class="card card-body">
+                                        <div class="nav nav-tabs" id="diachi" role="tablist">
+                                            <div class="row">
+                                                <nav>
+                                                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                                        <li class="nav-item nav-link active" id="nav-tinh-tab1"
+                                                            data-toggle="tab" href="#nav-tinh1" role="tab"
+                                                            aria-controls="nav-tinh1" aria-selected="true">
+                                                            Tỉnh/Thành phố
+                                                        </li>
+                                                        <li class="nav-item nav-link" id="nav-huyen-tab1"
+                                                            data-toggle="tab" href="#nav-huyen1" role="tab"
+                                                            aria-controls="nav-huyen1" aria-selected="false"
+                                                            style="margin-left: 50px;">
+                                                            Quận/Huyện
+                                                        </li>
+                                                        <li class="nav-item nav-link" id="nav-xa-tab1" data-toggle="tab"
+                                                            href="#nav-xa1" role="tab" aria-controls="nav-xa1"
+                                                            aria-selected="false" style="margin-left: 50px;">
+                                                            Phường/Xã
+                                                        </li>
+                                                    </div>
+                                                </nav>
+                                            </div>
+                                        </div>
+                                        <div class="tab-content" id="nav-tabContent">
+                                            <div class="tab-pane fade show active" id="nav-tinh1" role="tabpanel"
+                                                aria-labelledby="nav-tinh-tab1">
+                                                <div class="input-group mb-6">
+                                                    <select class="custom-select" ng-model="selectedProvince"
+                                                        ng-options="item.ProvinceName for item in provinces"
+                                                        ng-change="onProvince()">
+                                                        <option value="">Chọn tỉnh thành phố</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="nav-huyen1" role="tabpanel"
+                                                aria-labelledby="nav-huyen-tab1">
+                                                <div class="input-group mb-6">
+                                                    <select class="custom-select" ng-model="selectedDistrict"
+                                                        ng-options="it.DistrictName for it in districts"
+                                                        ng-change="onDistrict()">
+                                                        <option value="">Chọn quận huyện</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="tab-pane fade" id="nav-xa1" role="tabpanel"
+                                                aria-labelledby="nav-xa-tab1">
+                                                <div class="input-group mb-6">
+                                                    <select class="custom-select" ng-model="selectedWard"
+                                                        ng-options="it.WardName for it in communes"
+                                                        ng-change="onWard()">
+                                                        <option value="">Chọn xã phường</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <!-- Form Group (Address detail) -->
+                            <div class="form-group">
+                                <label for="">Địa chỉ cụ thể</label><input type="text" class="form-control" id=""
+                                    placeholder="Địa chỉ cụ thể" ng-model="dcct" required>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                                <button type="submit" class="btn btn-primary">cập nhật
+                                </button>
+                            </div>
+
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+
+
+</body>
+
+</html>

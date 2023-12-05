@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:replace="~{banhang/layout/layout :: banhang(~{::title},~{::main})}">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NVA3 | Thông tin sản phẩm</title>
+</head>
+
+<body>
+    <main ng-controller="product_detailctrl">
+        <!-- Start Banner Area -->
+        <section class="banner-area organic-breadcrumb">
+            <div class="container">
+                <div class="breadcrumb-banner d-flex flex-wrap align-items-center justify-content-end">
+                    <div class="col-first">
+                        <h1>Trang thông tin sản phẩm</h1>
+                        <nav class="d-flex align-items-center">
+                            <a th:href="@{/index}">Trang chủ<span class="lnr lnr-arrow-right"></span></a>
+                            <a href="">Cửa hàng<span class="lnr lnr-arrow-right"></span></a>
+                            <a href="">Thông tin sản phẩm</a>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- End Banner Area -->
+
+        <!--================Single Product Area =================-->
+        <div class="product_image_area">
+            <div class="container">
+                <div class="row s_product_inner">
+                    <div class="col-lg-6">
+                        
+                        <div class="s_Product_carousel">
+                            <div class="single-prd-item">
+                               <img class="img-fluid" ng-src="/images/sanpham/{{sanphams.hinhanh}}" alt="">
+                            </div> 
+                            <div class="single-prd-item">
+                                <img class="img-fluid"  ng-src="/images/sanpham/{{hinh2}}" alt="">
+                                
+                             </div> 
+                             <div class="single-prd-item">
+                                <img class="img-fluid"  ng-src="/images/sanpham/{{hinh3}}" alt="">
+                             </div> 
+                             
+                         </div>
+                    </div>
+                    <div class="col-lg-5 offset-lg-1">
+                        <div class="s_product_text">
+                            <h3>{{sanphams.tensp}}</h3>
+                            <h2>{{sanphams.giasp.toLocaleString('vi-VN')}}đ</h2>
+                             <ul class="list">
+                                <li><a class="active" href=""
+                                        ng-click="goToCategory(sanphams.nhomsanpham.manhom)"><span>Danh mục</span> :
+                                        {{sanphams.nhomsanpham.tennhom}}</a></li>
+                                <li><a href="#"><span>Hãng</span> : {{sanphams.thuonghieu.tenthuonghieu}}</a></li>
+                            </ul>
+                            <ul style="margin: 30px;">
+                                <li class="mb-3">
+                                    <h5> <i class="fa fa-shield mr-2" aria-hidden="true"></i>100% hàng chính hãng, bảo
+                                        hành 1 năm.</h5>
+                                </li>
+                                <li class="mb-3">
+                                    <h5><i class="fa fa-gift  mr-2" aria-hidden="true"></i>Thu cũ đổi mới tặng thêm
+                                        1,000,000đ.</h5>
+                                </li>
+                                <li class="mb-3">
+                                    <h5><i class="fa fa-refresh mr-2" aria-hidden="true"></i>Đổi trả 1 đổi 1 trong vòng
+                                        7 ngày. </h5>
+                                </li>
+
+                                <li class="mb-3">
+                                    <h5> <i class="fa fa-truck mr-2" aria-hidden="true"></i>Giao hàng tận nhà nhanh
+                                        chóng</h5>
+                                </li>
+                            </ul>
+                            <div class="product_count">
+                                <label for="qty">Số lượng:</label>
+                                <input type="text" name="qty" id="sst" ng-min="1" min="1" maxlength="12" title="Quantity"
+                                    class="input-text qty" ng-model="soluong">
+                                <button ng-click="incrementQuantity()" class="increase items-count" type="button"><i
+                                        class="lnr lnr-chevron-up"></i></button>
+                                <button ng-click="decrementQuantity()" class="reduced items-count" type="button"><i
+                                        class="lnr lnr-chevron-down"></i></button>
+                            </div>
+                            <div class="card_area d-flex align-items-center">
+                                <a class="primary-btn" href="" ng-click="addToCart(sanphams.masp)">Thêm vào giỏ hàng</a>
+                                <!-- <a class="icon_btn" href="#"><i class="lnr lnr lnr-diamond"></i></a>
+                                <a class="icon_btn" href="#"><i class="lnr lnr lnr-heart"></i></a> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--================End Single Product Area =================-->
+
+        <!--================Product Description Area =================-->
+        <section class="product_description_area">
+            <div class="container">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="home-tab" data-toggle="tab" data-target="#home" href="" role="tab"
+                            aria-controls="home" aria-selected="true">Mô tả</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="profile-tab" data-toggle="tab" data-target="#profile" href="" role="tab"
+                            aria-controls="profile" aria-selected="false">Thông số kỹ thuật</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link " id="review-tab" data-toggle="tab" data-target="#review" href=""
+                            role="tab" aria-controls="review" aria-selected="false">Đánh giá</a>
+                    </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+                    <div class="tab-pane fade  show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        <!-- <p ng-bind-html="sanphams.thongtin | unsafeHtml"></p> -->
+                        <p ng-bind-html="displayedDescription"></p>
+                        <div class="text-center">
+                            <button class="btn btn-info" ng-click="toggleDescription()">{{ buttonText }}</button>
+                        </div>
+                    </div>
+                    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                        <div class="table-responsive">
+                            <h3 class="text-center">Thông số kỹ thuật </h3>
+                            <p ng-bind-html="sanphams.thongsokythuat | unsafeHtml"></p>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade " id="review" role="tabpanel" aria-labelledby="review-tab">
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="row total_rate">
+                                    <div class="col-6">
+                                        <div class="box_total">
+
+                                            <h4>{{saotb.toFixed(1)}}</h4>
+                                            <h6>({{solandg}} Đánh giá)</h6>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="rating_list">
+                                            <h3>Dựa trên {{solandg}} đánh giá</h3>
+                                            <ul class="list">
+                                                <li><a href="#">5 Sao <i class="fa fa-star"></i><i
+                                                            class="fa fa-star"></i><i class="fa fa-star"></i><i
+                                                            class="fa fa-star"></i><i class="fa fa-star"></i> {{
+                                                        danhgiaResult.sao5 || 0 }}</a></li>
+                                                <li><a href="#">4 Sao <i class="fa fa-star"></i><i
+                                                            class="fa fa-star"></i><i class="fa fa-star"></i><i
+                                                            class="fa fa-star"></i> {{ danhgiaResult.sao4 || 0 }}</a>
+                                                </li>
+                                                <li><a href="#">3 Sao <i class="fa fa-star"></i><i
+                                                            class="fa fa-star"></i><i class="fa fa-star"></i> {{
+                                                        danhgiaResult.sao3 || 0 }}</a></li>
+                                                <li><a href="#">2 Sao <i class="fa fa-star"></i><i
+                                                            class="fa fa-star"></i> {{ danhgiaResult.sao2 || 0 }}</a>
+                                                </li>
+                                                <li><a href="#">1 Sao <i class="fa fa-star"></i> {{ danhgiaResult.sao1
+                                                        || 0 }}</a></li>
+                                            </ul>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="review_list">
+                                    <h4 ng-if="danhgias.length==0" class="text-center">Chưa có đánh giá</h4>
+                                    <div class="review_item" ng-repeat="dg in danhgias">
+                                        <div class="media">
+                                            <div class="d-flex">
+                                                <img ng-src="/images/useran.jpg" alt="" width="80px">
+                                            </div>
+                                            <div class="media-body">
+                                                <h4>{{dg.khachhang.hotenkh}}</h4>
+
+                                                <div style="display: inline-block;
+                                                font-size: 14px; margin-right: 3px;"
+                                                    ng-repeat="star in getStars(dg.sodanhgia)">
+                                                    <i class="fa fa-star"></i>
+                                                </div>
+                                                 <a href="" ng-if="account.usernamekh == dg.khachhang.usernamekh" ng-click="xoadg(dg.id)"> | Xóa đánh giá</a>
+                                            </div>
+                                        </div>
+                                        <p>{{dg.noidungdg}}</p>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="review_box">
+                                    <h4>Đánh giá</h4>
+                                    <p>Đánh giá của bạn:</p>
+
+                                    <ul class="list rating">
+                                        <li>
+                                            <input type="radio" id="star5" ng-model="selectedRating" name="rating"
+                                                value="5" checked>
+                                            <label for="star5"></label>
+
+                                            <input type="radio" id="star4" ng-model="selectedRating" name="rating"
+                                                value="4">
+                                            <label for="star4"></label>
+
+                                            <input type="radio" id="star3" ng-model="selectedRating" name="rating"
+                                                value="3">
+                                            <label for="star3"></label>
+
+                                            <input type="radio" id="star2" ng-model="selectedRating" name="rating"
+                                                value="2">
+                                            <label for="star2"></label>
+
+                                            <input type="radio" id="star1" ng-model="selectedRating" name="rating"
+                                                value="1">
+                                            <label for="star1"></label>
+                                        </li>
+                                    </ul>
+
+
+
+                                    <form class="row contact_form">
+
+
+
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                <label for="">Nội dung:</label>
+                                                <textarea class="form-control" name="message" id="message" rows="1"
+                                                    placeholder="Review" onfocus="this.placeholder = ''"
+                                                    onblur="this.placeholder = 'Review'"
+                                                    ng-model="noidungdg"></textarea>
+
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 text-right">
+                                            <button type="button" value="Gửi" class="primary-btn"
+                                                ng-click="danhgia()">Gửi ngay</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!--================End Product Description Area =================-->
+        <section class="related-product-area section_gap_bottom">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6 text-center">
+                        <div class="section-title">
+                            <h1>Sản phẩm tương tự</h1>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="row">
+                            <div class="col-lg-4 " ng-repeat="spdm in sanphamsdm | limitTo: 6"
+                                ng-if="spdm.masp != sanphams.masp">
+                                <div class="single-related-product d-flex">
+                                    <a href="" ng-click="goToSinglePage(spdm.masp)"><img
+                                            ng-src="/images/sanpham/{{spdm.hinhanh}}" alt="" width="100px"></a>
+                                    <div class="desc">
+                                        <a href="#" class="title"
+                                            ng-click="goToSinglePage(spdm.masp)">{{spdm.tensp.length > 40 ? (spdm.tensp
+                                            | limitTo: 40) + '...' : spdm.tensp}}</a>
+                                        <div class="price">
+                                            <h6>{{spdm.giasp.toLocaleString('vi-VN')}}đ</h6>
+                                            <!-- <h6 class="l-through">$210.00</h6> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+</body>
+
+</html>
